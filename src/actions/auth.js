@@ -44,18 +44,19 @@ const storeAuthInfo = (authToken, dispatch) => {
 
 export const login = (username, password) => dispatch => {
     dispatch(authRequest());
-    console.log('login attempted')
-    console.log('username, password')
-        // fetch(`${API_BASE_URL}/auth/login`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         username,
-        //         password
-        //     })
-        // })
+    // console.log('login attempted')
+    // console.log('username, password')
+    return (
+        fetch(`${API_BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        })
             // Reject any requests which don't return a 200 status, creating
             // errors which follow a consistent format
             .then(res => normalizeResponseErrors(res))
@@ -75,8 +76,8 @@ export const login = (username, password) => dispatch => {
                         _error: message
                     })
                 );
-            });
-//     );
+            })
+    );
 };
 
 export const refreshAuthToken = () => (dispatch, getState) => {

@@ -12,6 +12,7 @@ export class HeaderBar extends React.Component {
     render() {
         // Only render the gretting and the log out button if we are logged in
         let logOutButton;
+        let greeting;
         if (this.props.loggedIn) {
             logOutButton = (
                 <button onClick={() => this.logOut()}>Log out</button>
