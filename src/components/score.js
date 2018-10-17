@@ -7,7 +7,6 @@ export class Score extends React.component {
         const currentPercentage = this.props.thisTimeAtt > 0 ? this.props.currentCorrect / this.props.thisTimeAtt : 0;
         const allTimePercentage = this.props.allTimeAtt > 0 ? this.props.allTimeCorrect : 0;
 
-
         return (
             <div id="score">
                 <div id="score-text-parent">

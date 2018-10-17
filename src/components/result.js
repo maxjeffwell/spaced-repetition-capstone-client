@@ -5,9 +5,10 @@ export class Result extends React.component {
 
     render() {
         const resSchema = {
-            answerCorrect: <div className="correct-answer">Correct</div>,
-            answerIncorrect: <div className="incorrect-answer">Incorrect</div>
-
+            answerCorrect:
+                <div className="correct-answer">Correct</div>,
+            answerIncorrect:
+                <div className="incorrect-answer">Incorrect</div>
         }
     let response = resSchema[this.props.status];
 
