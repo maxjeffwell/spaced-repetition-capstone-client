@@ -12,14 +12,10 @@ export class HeaderBar extends React.Component {
     render() {
         // Only render the greeting and the log out button if we are logged in
         let logOutButton;
-        let greeting;
         if (this.props.loggedIn) {
             logOutButton = (
                 <button onClick={() => this.logOut()}>Log out</button>
             );
-            greeting = (
-                <h2>{`Hello ${this.props.firstName}, welcome to the club`}</h2>
-            )
         }
         return (
             <div className="header-bar">
@@ -31,7 +27,7 @@ export class HeaderBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    loggedIn: state.auth.currentUser !== null
+    loggedIn: state.auth.currentUser !== null,
 });
 
 export default connect(mapStateToProps)(HeaderBar);

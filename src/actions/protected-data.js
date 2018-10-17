@@ -14,17 +14,17 @@ export const fetchProtectedDataError = error => ({
 });
 
 export const fetchProtectedData = () => (dispatch, getState) => {
-    const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/protected`, {
+    // const authToken = getState().auth.authToken;
+    return fetch(`${API_BASE_URL}/questions/`, {
         method: 'GET',
-        headers: {
-            // Provide our auth token as credentials
-            Authorization: `Bearer ${authToken}`
-        }
+        // headers: {
+        //     // Provide our auth token as credentials
+        //     Authorization: `Bearer ${authToken}`
+        // }
     })
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())
-        .then(({data}) => dispatch(fetchProtectedDataSuccess(data)))
+        .then((res) => dispatch(fetchProtectedDataSuccess(res)))
         .catch(err => {
             dispatch(fetchProtectedDataError(err));
         });
