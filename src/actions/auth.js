@@ -11,6 +11,12 @@ export const setAuthToken = authToken => ({
     authToken
 });
 
+export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const setCurrentUser = currentUser => ({
+    type: SET_CURRENT_USER,
+    currentUser
+})
+
 export const CLEAR_AUTH = 'CLEAR_AUTH';
 export const clearAuth = () => ({
     type: CLEAR_AUTH
@@ -97,6 +103,7 @@ export const refreshAuthToken = () => (dispatch, getState) => {
             // We couldn't get a refresh token because our current credentials
             // are invalid or expired, or something else went wrong, so clear
             // them and sign us out
+            dispatch(setCurrentUser(null));
             dispatch(authError(err));
             dispatch(clearAuth());
             clearAuthToken(authToken);
