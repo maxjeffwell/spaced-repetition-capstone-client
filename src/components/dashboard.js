@@ -5,18 +5,24 @@ import {fetchProtectedData} from '../actions/protected-data';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
+        console.log(this.props);
         this.props.dispatch(fetchProtectedData());
     }
 
     render() {
+        console.log(`In render`, this.props)
+        if (this.props.protectedData.length < 1) {
+            return <div>Loading...</div>
+        }
         return (
             <div className="dashboard">
-                <div className="dashboard-username">
-                    Username: {this.props.username}
+                <h2>{`Hello ${this.props.firstName}, welcome to the club!`}</h2>
+                <div className="question">
+                    <p>{`Question: ${this.props.protectedData[0].question}`}</p>
                 </div>
-                <div className="dashboard-name">Name: {this.props.name}</div>
+                <div className="dashboard-name">Name: {this.props.username}</div>
                 <div className="dashboard-protected-data">
-                    Protected data: {this.props.protectedData}
+                    {/* Protected data: {this.props.protectedData} */}
                 </div>
             </div>
         );
@@ -27,7 +33,7 @@ const mapStateToProps = state => {
     const {currentUser} = state.auth;
     return {
         username: state.auth.currentUser.username,
-        name: `${currentUser.firstName} ${currentUser.lastName}`,
+        firstName: `${currentUser.firstName}`,
         protectedData: state.protectedData.data
     };
 };
