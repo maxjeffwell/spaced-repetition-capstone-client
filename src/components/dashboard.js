@@ -4,6 +4,7 @@ import requiresLogin from './requires-login';
 import {fetchProtectedData} from '../actions/protected-data';
 import AnswerInput from './answer-input';
 import Feedback from './feedback';
+import Score from './score';
 
 export class Dashboard extends React.Component {
     componentDidMount() {
@@ -20,16 +21,19 @@ export class Dashboard extends React.Component {
             <div className="dashboard">
                 <h2>{`Hello ${this.props.firstName}, welcome to the club!`}</h2>
                 <div className="question">
-                    <p>{`Question: ${this.props.protectedData[0].question}`}</p>
+                    <p>{`Question: ${this.props.protectedData[this.props.currQuestion].question}`}</p>
                 </div>
                 <div><AnswerInput />
                 </div>
                 <div><Feedback />
                 </div>
-                <div className="dashboard-name">Name: {this.props.username}</div>
-                <div className="dashboard-protected-data">
-                    {/* Protected data: {this.props.protectedData} */}
+                <div><Score />
                 </div>
+                <button type="submit" /*disabled={this.props.pristine || this.props.submitting}*/>Next</button>
+                {/* <div className="dashboard-name">Name: {this.props.username}</div>
+                <div className="dashboard-protected-data">
+                    { Protected data: {this.props.protectedData} }
+                </div> */}
             </div>
         );
     }
@@ -40,7 +44,8 @@ const mapStateToProps = state => {
     return {
         username: state.auth.currentUser.username,
         firstName: `${currentUser.firstName}`,
-        protectedData: state.protectedData.data
+        protectedData: state.protectedData.data,
+        currQuestion: state.score.currQuestion
     };
 };
 

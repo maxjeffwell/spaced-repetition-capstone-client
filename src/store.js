@@ -4,6 +4,7 @@ import {loadAuthToken} from './local-storage';
 import authReducer from './reducers/auth';
 import protectedDataReducer from './reducers/protected-data';
 import learningTwoReducer from './reducers/learning-two';
+import scoreReducer from './reducers/score';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from "redux-thunk";
@@ -14,6 +15,7 @@ const store = createStore(
         auth: authReducer,
         protectedData: protectedDataReducer,
         learningTwo: learningTwoReducer,
+        score: scoreReducer
     }), composeWithDevTools(
     applyMiddleware(thunk))
 );

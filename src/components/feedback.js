@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 export class Feedback extends React.Component {
     render() {
-        if (this.props.currentStatus == "answerCorrect") {
+        if (this.props.currentStatus === "answerCorrect") {
             return (
                 <div className="answerCorrect">
                     <p>
@@ -12,11 +12,11 @@ export class Feedback extends React.Component {
                 </div>
             )
         } 
-        else if (this.props.currentStatus == "answerIncorrect") {
+        else if (this.props.currentStatus === "answerIncorrect") {
             return (
                 <div className="answer-label">
                 <p>
-                    {`The correct answer is: ${this.props.protectedData[0].answer}`}
+                    {`The correct answer is: ${this.props.protectedData[this.props.currQuestion].answer}`}
                 </p>
                 </div>
             )
@@ -36,7 +36,8 @@ export class Feedback extends React.Component {
 const mapStateToProps = state => {
     return {
         currentStatus: state.learningTwo.currentStatus,
-        protectedData: state.protectedData.data
+        protectedData: state.protectedData.data,
+        currQuestion: state.score.currQuestion
     };
 };
 

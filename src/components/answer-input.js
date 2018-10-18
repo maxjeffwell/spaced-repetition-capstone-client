@@ -2,9 +2,10 @@ import React from 'react';
 import Field from "redux-form/es/Field";
 import {nonEmpty, required} from "../validators";
 import { connect } from 'react-redux';
-import { reduxForm } from 'redux-form';
+import { reduxForm, reset } from 'redux-form';
 import Input from "./input";
 import { correctAnswer, incorrectAnswer } from "../actions/learning-two";
+import { incrementAttCount, incrementCorrectCount, nextQuestion } from "../actions/scores";
 // import connect from "react-redux/es/connect/connect";
 // import * as store from "react-redux";
 // import {ThunkAction as getState} from "redux-thunk";
@@ -12,13 +13,18 @@ import { correctAnswer, incorrectAnswer } from "../actions/learning-two";
 class AnswerInput extends React.Component {
     onSubmit(values) {
         const { answerInput } = values;
+        this.props.dispatch(reset('answerInput'));
         console.log(answerInput);
         console.log(this.props);
-        if (this.props.protectedData[0].answer === answerInput) {
+        if (this.props.protectedData[this.props.currQuestion].answer === answerInput) {
             this.props.dispatch(correctAnswer);
+            this.props.dispatch(incrementAttCount);
+            this.props.dispatch(incrementCorrectCount);
+            this.props.dispatch(nextQuestion);
         }
         else {
             this.props.dispatch(incorrectAnswer);
+            this.props.dispatch(incrementAttCount);
         }
         // console.log(store.getState());
     }
@@ -68,7 +74,8 @@ const mapStateToProps = state => {
     return {
         // username: state.auth.currentUser.username,
         // firstName: `${currentUser.firstName}`,
-        protectedData: state.protectedData.data
+        protectedData: state.protectedData.data,
+        currQuestion: state.score.currQuestion
     };
 };
 
