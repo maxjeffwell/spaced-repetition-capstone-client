@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
 import Input from "./input";
 import { correctAnswer, incorrectAnswer } from "../actions/learning-two";
-import { incrementAttCount, incrementCorrectCount, nextQuestion } from "../actions/scores";
+import { incrementAttCount, incrementCorrectCount } from "../actions/scores";
 // import connect from "react-redux/es/connect/connect";
 // import * as store from "react-redux";
 // import {ThunkAction as getState} from "redux-thunk";
@@ -20,7 +20,6 @@ class AnswerInput extends React.Component {
             this.props.dispatch(correctAnswer);
             this.props.dispatch(incrementAttCount);
             this.props.dispatch(incrementCorrectCount);
-            this.props.dispatch(nextQuestion);
         }
         else {
             this.props.dispatch(incorrectAnswer);

@@ -5,6 +5,7 @@ import {fetchProtectedData} from '../actions/protected-data';
 import AnswerInput from './answer-input';
 import Feedback from './feedback';
 import Score from './score';
+import { nextQuestion } from "../actions/scores";
 
 export class Dashboard extends React.Component {
     componentDidMount() {
@@ -29,7 +30,7 @@ export class Dashboard extends React.Component {
                 </div>
                 <div><Score />
                 </div>
-                <button type="submit" /*disabled={this.props.pristine || this.props.submitting}*/>Next</button>
+                <button type="button" className="nextButton" onClick={() => this.props.dispatch(nextQuestion)} /*disabled={this.props.pristine || this.props.submitting}*/>Next</button>
                 {/* <div className="dashboard-name">Name: {this.props.username}</div>
                 <div className="dashboard-protected-data">
                     { Protected data: {this.props.protectedData} }
