@@ -1,4 +1,4 @@
-import { CORRECT_ANSWER, INCORRECT_ANSWER} from "../actions/learning-two";
+import { CORRECT_ANSWER, INCORRECT_ANSWER} from "../actions/answer-submit";
 
 
 const initialState = {

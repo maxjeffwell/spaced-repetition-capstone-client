@@ -15,14 +15,14 @@ export class Dashboard extends React.Component {
 
     render() {
         console.log(`In render`, this.props)
-        if (this.props.protectedData.length < 1) {
+        if (!this.props.protectedData) {
             return <div>Loading...</div>
         }
         return (
             <div className="dashboard">
                 <h2>{`Hello ${this.props.firstName}, welcome to the club!`}</h2>
                 <div className="question">
-                    <p>{`Question: ${this.props.protectedData[this.props.currQuestion].question}`}</p>
+                    <p>{`Question: ${this.props.question/* [this.props.currQuestion]*/}`}</p>
                 </div>
                 <div><AnswerInput />
                 </div>
@@ -46,7 +46,8 @@ const mapStateToProps = state => {
         username: state.auth.currentUser.username,
         firstName: `${currentUser.firstName}`,
         protectedData: state.protectedData.data,
-        currQuestion: state.score.currQuestion
+        currQuestion: state.score.currQuestion,
+        question: `${currentUser.questions[currentUser.head].question}`
     };
 };
 
