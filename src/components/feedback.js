@@ -11,12 +11,12 @@ export class Feedback extends React.Component {
                     </p>
                 </div>
             )
-        } 
+        }
         else if (this.props.currentStatus === "answerIncorrect") {
             return (
                 <div className="answer-label">
                 <p>
-                    {`The correct answer is: ${this.props.protectedData[this.props.currQuestion].answer}`}
+                    {`The correct answer is: ${this.props.answer}`}
                 </p>
                 </div>
             )
@@ -29,15 +29,17 @@ export class Feedback extends React.Component {
                 </p>
                 </div>
             )
-        }        
+        }
     }
 }
 
 const mapStateToProps = state => {
+    const {currentUser} = state.auth;
     return {
-        currentStatus: state.learningTwo.currentStatus,
+        currentStatus: state.answerSubmit.currentStatus,
         protectedData: state.protectedData.data,
-        currQuestion: state.score.currQuestion
+        currQuestion: state.score.currQuestion,
+        answer: `${currentUser.questions[currentUser.head].answer}`
     };
 };
 

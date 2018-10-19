@@ -14,18 +14,52 @@ export const fetchProtectedDataError = error => ({
 });
 
 export const fetchProtectedData = () => (dispatch, getState) => {
-    // const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/questions/`, {
+
+    const authToken = getState().auth.authToken;
+    const userId = getState().auth.currentUser._id;
+    console.log(userId);
+    return fetch(`${API_BASE_URL}/users/${userId}`, {
         method: 'GET',
-        // headers: {
-        //     // Provide our auth token as credentials
-        //     Authorization: `Bearer ${authToken}`
-        // }
+        headers: {
+            // Provide our auth token as credentials
+
+            Authorization: `Bearer ${authToken}`
+        }
     })
         .then(res => normalizeResponseErrors(res))
         .then(res => res.json())
+        // .then(console.log(res))
         .then((res) => dispatch(fetchProtectedDataSuccess(res)))
         .catch(err => {
             dispatch(fetchProtectedDataError(err));
         });
 };
+
+// export const updateOnCorrAns = () => (dispatch, getState) => {
+//     const authToken = getState().auth.authToken;
+//     const userId = getState().auth.currentUser._id;
+
+//
+//     return fetch(`${API_BASE_URL}/users/${userId}`, {
+//         method: 'PATCH',
+//         headers: {
+//             // Provide our auth token as credentials
+//             Authorization: `Bearer ${authToken}`,
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             head:
+//             memoryStrength: (memoryStrength *= 2),
+//             next
+//         })
+//
+//     })
+//         .then(res => normalizeResponseErrors(res))
+//         .then(res => res.json())
+//         // .then(console.log(res))
+//         .then((res) => dispatch(fetchProtectedDataSuccess(res)))
+//         .catch(err => {
+//             dispatch(fetchProtectedDataError(err));
+//         });
+// };
+// }

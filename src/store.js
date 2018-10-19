@@ -3,7 +3,7 @@ import {reducer as formReducer} from 'redux-form';
 import {loadAuthToken} from './local-storage';
 import authReducer from './reducers/auth';
 import protectedDataReducer from './reducers/protected-data';
-import learningTwoReducer from './reducers/learning-two';
+import answerSubmitReducer from './reducers/answer-submit';
 import scoreReducer from './reducers/score';
 import {setAuthToken, refreshAuthToken} from './actions/auth';
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -14,7 +14,7 @@ const store = createStore(
         form: formReducer,
         auth: authReducer,
         protectedData: protectedDataReducer,
-        learningTwo: learningTwoReducer,
+        answerSubmit: answerSubmitReducer,
         score: scoreReducer
     }), composeWithDevTools(
     applyMiddleware(thunk))

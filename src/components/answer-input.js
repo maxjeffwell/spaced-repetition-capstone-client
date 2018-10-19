@@ -4,11 +4,8 @@ import {nonEmpty, required} from "../validators";
 import { connect } from 'react-redux';
 import { reduxForm, reset } from 'redux-form';
 import Input from "./input";
-import { correctAnswer, incorrectAnswer } from "../actions/learning-two";
+import { correctAnswer, incorrectAnswer } from "../actions/answer-submit";
 import { incrementAttCount, incrementCorrectCount } from "../actions/scores";
-// import connect from "react-redux/es/connect/connect";
-// import * as store from "react-redux";
-// import {ThunkAction as getState} from "redux-thunk";
 
 class AnswerInput extends React.Component {
     onSubmit(values) {
@@ -16,7 +13,7 @@ class AnswerInput extends React.Component {
         this.props.dispatch(reset('answerInput'));
         console.log(answerInput);
         console.log(this.props);
-        if (this.props.protectedData[this.props.currQuestion].answer === answerInput) {
+        if (this.props.answer === answerInput) {
             this.props.dispatch(correctAnswer);
             this.props.dispatch(incrementAttCount);
             this.props.dispatch(incrementCorrectCount);
@@ -25,17 +22,8 @@ class AnswerInput extends React.Component {
             this.props.dispatch(incorrectAnswer);
             this.props.dispatch(incrementAttCount);
         }
-        // console.log(store.getState());
+
     }
-        //     if (this.props.status === 'question') {
-        //         let answerCorrect = (this.answer.value.toLowerCase() === this.props.answer.toLowerCase());
-        //         this.props.dispatch(answerResponse(answerCorrect));
-        //         this.props.dispatch(sendAnswer(this.props.id, answerCorrect));
-        //     }
-        //     else {
-        //         this.answer.value = '';
-        //         this.props.dispatch(fetchQuestion(this.props.id));
-        //
 
     render() {
 
@@ -69,17 +57,12 @@ class AnswerInput extends React.Component {
 }
 
 const mapStateToProps = state => {
-    // const {currentUser} = state.auth;
+    const {currentUser} = state.auth;
     return {
-        // username: state.auth.currentUser.username,
-        // firstName: `${currentUser.firstName}`,
         protectedData: state.protectedData.data,
-        currQuestion: state.score.currQuestion
+        currQuestion: state.score.currQuestion,
+        answer: `${currentUser.questions[currentUser.head].answer}`
     };
 };
-
-// function mapStateToProps(state) {
-//     return { protectedData: state.protectedData.data};
-// };
 
 export default connect(mapStateToProps)(reduxForm({form: 'answerInput'})(AnswerInput));
