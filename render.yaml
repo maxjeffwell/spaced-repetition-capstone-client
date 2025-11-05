@@ -1,4 +1,5 @@
 # Frontend (React + TensorFlow.js WebGPU)
+services:
   - type: web
     name: spaced-repetition-client
     runtime: static
