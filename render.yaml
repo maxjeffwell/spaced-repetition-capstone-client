@@ -1,10 +1,10 @@
-# Frontend (React + TensorFlow.js WebGPU)
 services:
+  # Frontend (React + TensorFlow.js WebGPU)
   - type: web
     name: spaced-repetition-client
     runtime: static
-    buildCommand: npm install
-    staticPublishPath: spaced-repetition-capstone-client/build
+    buildCommand: npm install && npm run build
+    staticPublishPath: build
     pullRequestPreviewsEnabled: true
     headers:
       - path: /*
@@ -25,7 +25,7 @@ services:
         destination: /index.html
     envVars:
       - key: REACT_APP_API_BASE_URL
-        sync: false  # Will be the backend URL (set in dashboard)
+        sync: false
       - key: NODE_ENV
         value: production
     autoDeploy: true
