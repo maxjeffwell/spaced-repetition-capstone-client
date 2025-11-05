@@ -18,9 +18,7 @@
     "redux-form": "^8.3.10",
     "redux-thunk": "^2.3.0"
   },
-  "devDependencies": {
-    "redux-devtools-extension": "^2.13.5"
-  },
+  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
