@@ -1,0 +1,118 @@
+.ml-status {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 2px solid #00ff41;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+  box-shadow: 0 4px 6px rgba(0, 255, 65, 0.1);
+  transition: all 0.3s ease;
+}
+
+.ml-status.loading {
+  border-color: #888;
+  opacity: 0.7;
+}
+
+.ml-status:hover {
+  box-shadow: 0 6px 12px rgba(0, 255, 65, 0.2);
+  transform: translateY(-2px);
+}
+
+.ml-status-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ml-icon {
+  font-size: 24px;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.5));
+}
+
+.ml-backend {
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ff41;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  letter-spacing: 1px;
+}
+
+.ml-speedup {
+  font-size: 12px;
+  color: #aaa;
+  background: rgba(0, 255, 65, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-left: auto;
+}
+
+.ml-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.ml-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.ml-stat label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.ml-stat value {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.ml-stat value.improvement {
+  color: #00ff41;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+}
+
+.ml-description {
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Pulse animation for WebGPU */
+.ml-status[style*="00ff41"] .ml-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 65, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(0, 255, 65, 0.8));
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .ml-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .ml-stat {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
