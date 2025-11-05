@@ -1,21 +1,54 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 
 import LoginForm from './login-form';
+import './landing-page.css';
 
 export function LandingPage(props) {
-    // If we are logged in redirect straight to the user's dashboard
+    // If we are logged in redirect straight to the learning page
     if (props.loggedIn) {
-        return <Redirect to="/dashboard" />;
+        return <Navigate to="/learn" replace />;
     }
 
     return (
-        <div className="home">
-            <h2>Welcome to Speakeasy...do you know the secret knock?</h2>
-            <LoginForm />
-            <p>Do you find yourself nodding along with your smart tech friends, coworkers, or worse, your boss, as if you understand the latest tech jargon? All the while, secretly hoping that you won't have to feign choking on your drink if someone asks you a question? Are you yearning to get into the club but can't quite speak the language? Welcome to Speakeasy, where it's fun to stay up to date with all the latest secret knocks that open doors... </p>
-            <Link to="/register">Become one of the club</Link>
+        <div className="landing-page">
+            <div className="landing-container">
+                <div className="landing-header">
+                    <h1>🧠 Neural-Enhanced Learning</h1>
+                    <p className="landing-subtitle">
+                        Master Spanish vocabulary with AI-powered spaced repetition
+                    </p>
+                </div>
+
+                <div className="login-section">
+                    <h2>Sign In</h2>
+                    <LoginForm />
+                </div>
+
+                <div className="features-section">
+                    <div className="feature">
+                        <span className="feature-icon">🚀</span>
+                        <h3>WebGPU Acceleration</h3>
+                        <p>Lightning-fast ML predictions powered by your GPU</p>
+                    </div>
+                    <div className="feature">
+                        <span className="feature-icon">🎯</span>
+                        <h3>Adaptive Learning</h3>
+                        <p>AI predicts optimal review intervals for maximum retention</p>
+                    </div>
+                    <div className="feature">
+                        <span className="feature-icon">📊</span>
+                        <h3>Real-time Analytics</h3>
+                        <p>Track your progress with detailed performance metrics</p>
+                    </div>
+                </div>
+
+                <div className="register-section">
+                    <p>Don't have an account?</p>
+                    <Link to="/register" className="register-link">Create Account</Link>
+                </div>
+            </div>
         </div>
     );
 }

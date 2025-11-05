@@ -1,17 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import App from './components/app';
 import store from './store';
 import './index.css';
+import './suppress-legacy-warnings';
 
-
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <Provider store={store}>
         <Router>
             <App />
         </Router>
-    </Provider>,
-    document.getElementById('root')
+    </Provider>
 );

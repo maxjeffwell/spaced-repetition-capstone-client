@@ -1,0 +1,221 @@
+.landing-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing-container {
+  max-width: 600px;
+  width: 100%;
+}
+
+.landing-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.landing-header h1 {
+  color: #00ff41;
+  font-size: 48px;
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+  margin: 0 0 16px 0;
+}
+
+.landing-subtitle {
+  color: #aaa;
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Login Section */
+.login-section {
+  background: linear-gradient(135deg, #1e1e3f 0%, #2a2a4a 100%);
+  border: 2px solid #00ff41;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 8px 32px rgba(0, 255, 65, 0.2);
+}
+
+.login-section h2 {
+  color: #00ff41;
+  text-align: center;
+  font-size: 24px;
+  margin: 0 0 24px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Login Form Styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form label {
+  color: #888;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #00ff41;
+  border-radius: 8px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+  outline: none;
+  border-color: #ff1493;
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
+}
+
+.login-form button {
+  width: 100%;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  background: linear-gradient(135deg, #00ff41 0%, #00cc33 100%);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 8px;
+}
+
+.login-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 65, 0.4);
+}
+
+.login-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-error {
+  background: rgba(255, 20, 147, 0.1);
+  border: 2px solid #ff1493;
+  border-radius: 8px;
+  padding: 12px;
+  color: #ff6699;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Features Section */
+.features-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.feature {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+}
+
+.feature:hover {
+  border-color: #00ff41;
+  box-shadow: 0 4px 16px rgba(0, 255, 65, 0.2);
+  transform: translateY(-2px);
+}
+
+.feature-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.feature h3 {
+  color: #00ff41;
+  font-size: 16px;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.feature p {
+  color: #aaa;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Register Section */
+.register-section {
+  text-align: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 20, 147, 0.3);
+}
+
+.register-section p {
+  color: #aaa;
+  margin: 0 0 16px 0;
+  font-size: 16px;
+}
+
+.register-link {
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #ff1493 0%, #cc1077 100%);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.register-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .landing-header h1 {
+    font-size: 36px;
+  }
+
+  .landing-subtitle {
+    font-size: 16px;
+  }
+
+  .login-section {
+    padding: 24px;
+  }
+
+  .feature {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .feature-icon {
+    font-size: 48px;
+  }
+}

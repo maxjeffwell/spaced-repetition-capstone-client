@@ -58,6 +58,16 @@ class AnswerInput extends React.Component {
 
 const mapStateToProps = state => {
     const {currentUser} = state.auth;
+
+    // Safety check for user data
+    if (!currentUser || !currentUser.questions || currentUser.head === undefined) {
+        return {
+            protectedData: state.protectedData.data,
+            currQuestion: state.score.currQuestion,
+            answer: ''
+        };
+    }
+
     return {
         protectedData: state.protectedData.data,
         currQuestion: state.score.currQuestion,

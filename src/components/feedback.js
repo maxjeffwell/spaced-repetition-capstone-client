@@ -35,6 +35,17 @@ export class Feedback extends React.Component {
 
 const mapStateToProps = state => {
     const {currentUser} = state.auth;
+
+    // Safety check for user data
+    if (!currentUser || !currentUser.questions || currentUser.head === undefined) {
+        return {
+            currentStatus: state.answerSubmit.currentStatus,
+            protectedData: state.protectedData.data,
+            currQuestion: state.score.currQuestion,
+            answer: ''
+        };
+    }
+
     return {
         currentStatus: state.answerSubmit.currentStatus,
         protectedData: state.protectedData.data,

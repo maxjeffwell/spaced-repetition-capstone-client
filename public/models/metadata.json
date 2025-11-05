@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "trainedOn": "2025-11-05T01:35:42.334Z",
+  "trainedOn": "2025-11-05T02:59:37.282Z",
   "trainingSamples": 90,
   "testMAE": 0.0735,
   "baselineMAE": 1.8889,

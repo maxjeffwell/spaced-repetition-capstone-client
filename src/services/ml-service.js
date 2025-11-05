@@ -87,38 +87,9 @@ class MLService {
       // Initialize backend
       await this.initializeBackend();
 
-      // Load model
+      // Load model using TensorFlow.js built-in loader
       console.log(`\n📥 Loading model from ${modelPath}...`);
-
-      // Load model data
-      const response = await fetch(modelPath);
-      const modelData = await response.json();
-
-      // Load weights
-      const weightsResponse = await fetch('/models/weights.bin');
-      const weightsBuffer = await weightsResponse.arrayBuffer();
-
-      // Parse weights
-      const weights = [];
-      const float32Array = new Float32Array(weightsBuffer);
-      let offset = 0;
-
-      modelData.weightsManifest[0].weights.forEach(weightSpec => {
-        const size = weightSpec.shape.reduce((a, b) => a * b, 1);
-        const weightData = Array.from(float32Array.slice(offset, offset + size));
-        weights.push({
-          shape: weightSpec.shape,
-          data: weightData
-        });
-        offset += size;
-      });
-
-      // Reconstruct model from topology
-      this.model = await tf.models.modelFromJSON(modelData);
-
-      // Set weights
-      const weightTensors = weights.map(w => tf.tensor(w.data, w.shape));
-      this.model.setWeights(weightTensors);
+      this.model = await tf.loadLayersModel(modelPath);
 
       // Load normalization stats
       const statsResponse = await fetch('/models/normalization-stats.json');

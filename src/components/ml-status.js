@@ -56,15 +56,15 @@ export default function MLStatus({ mlInfo }) {
       <div className="ml-stats">
         <div className="ml-stat">
           <label>Predictions:</label>
-          <value>{mlInfo.metrics?.totalPredictions || 0}</value>
+          <span className="value">{mlInfo.metrics?.totalPredictions || 0}</span>
         </div>
         <div className="ml-stat">
           <label>Avg Time:</label>
-          <value>{(mlInfo.metrics?.avgPredictionTime || 0).toFixed(2)}ms</value>
+          <span className="value">{(mlInfo.metrics?.avgPredictionTime || 0).toFixed(2)}ms</span>
         </div>
         <div className="ml-stat">
           <label>Improvement:</label>
-          <value className="improvement">+{(mlInfo.metadata?.improvement || 96.1).toFixed(1)}%</value>
+          <span className="value improvement">+{(mlInfo.metadata?.improvement || 96.1).toFixed(1)}%</span>
         </div>
       </div>
 

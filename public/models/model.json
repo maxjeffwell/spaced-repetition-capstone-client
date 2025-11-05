@@ -156,7 +156,7 @@
       ],
       "weights": [
         {
-          "name": "weight_0",
+          "name": "dense_Dense1/kernel",
           "shape": [
             8,
             32
@@ -164,14 +164,14 @@
           "dtype": "float32"
         },
         {
-          "name": "weight_1",
+          "name": "dense_Dense1/bias",
           "shape": [
             32
           ],
           "dtype": "float32"
         },
         {
-          "name": "weight_2",
+          "name": "dense_Dense2/kernel",
           "shape": [
             32,
             16
@@ -179,14 +179,14 @@
           "dtype": "float32"
         },
         {
-          "name": "weight_3",
+          "name": "dense_Dense2/bias",
           "shape": [
             16
           ],
           "dtype": "float32"
         },
         {
-          "name": "weight_4",
+          "name": "dense_Dense3/kernel",
           "shape": [
             16,
             8
@@ -194,14 +194,14 @@
           "dtype": "float32"
         },
         {
-          "name": "weight_5",
+          "name": "dense_Dense3/bias",
           "shape": [
             8
           ],
           "dtype": "float32"
         },
         {
-          "name": "weight_6",
+          "name": "dense_Dense4/kernel",
           "shape": [
             8,
             1
@@ -209,7 +209,7 @@
           "dtype": "float32"
         },
         {
-          "name": "weight_7",
+          "name": "dense_Dense4/bias",
           "shape": [
             1
           ],
