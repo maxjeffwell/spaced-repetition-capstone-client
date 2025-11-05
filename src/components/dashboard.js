@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Navigate} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import requiresLogin from './requires-login';
 
 export class Dashboard extends React.Component {
     render() {
         // Redirect to the new learning page
-        return <Navigate to="/learn" replace />;
+        return <Navigate to="/learn" replace={true} />;
     }
 }
 

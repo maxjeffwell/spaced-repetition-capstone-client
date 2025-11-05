@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const getcurrPercentage = (currCorrect, currAttempted) => {
+const getCurrPercentage = (currCorrect, currAttempted) => {
   return (Math.round((currCorrect/currAttempted) * 100));
 }
 
@@ -27,7 +27,7 @@ const mapStateToProps = state => {
   return {
       currSessionCorrect: state.score.currSessionCorrect,
       currSessionAttempted: state.score.currSessionAttempted,
-      currPercentage: getcurrPercentage(state.score.currSessionCorrect, state.score.currSessionAttempted)
+      currPercentage: getCurrPercentage(state.score.currSessionCorrect, state.score.currSessionAttempted)
   };
 };
 
