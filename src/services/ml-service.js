@@ -9,6 +9,7 @@
 
 import * as tf from '@tensorflow/tfjs';
 import '@tensorflow/tfjs-backend-webgpu';
+import { createAdvancedFeatureVector, getFeatureArray } from './advanced-features.js';
 
 class MLService {
   constructor() {
@@ -105,8 +106,8 @@ class MLService {
       console.log(`\n✓ Model loaded successfully!`);
       console.log(`   Load time: ${loadTime.toFixed(2)}ms`);
       console.log(`   Backend: ${this.backend.toUpperCase()}`);
-      console.log(`   Training MAE: ${metadata.testMAE.toFixed(4)} days`);
-      console.log(`   Improvement: ${metadata.improvement.toFixed(1)}%`);
+      console.log(`   Training MAE: ${metadata.performance.testMAE.toFixed(4)} days`);
+      console.log(`   Improvement: ${metadata.performance.improvement.toFixed(1)}%`);
 
       this.isLoaded = true;
 
@@ -143,7 +144,7 @@ class MLService {
   /**
    * Predict optimal interval for a question
    */
-  async predict(questionFeatures) {
+  async predict(questionFeatures, reviewHistory = null) {
     if (!this.isLoaded || !this.model) {
       throw new Error('Model not loaded. Call loadModel() first.');
     }
@@ -151,17 +152,21 @@ class MLService {
     const startTime = performance.now();
 
     try {
-      // Extract and normalize features
-      const featureVector = [
-        questionFeatures.memoryStrength || 1,
-        questionFeatures.difficultyRating || 0.5,
-        questionFeatures.timeSinceLastReview || 0,
-        questionFeatures.successRate || 0,
-        (questionFeatures.averageResponseTime || 0) / 1000, // Convert ms to seconds
-        questionFeatures.totalReviews || 0,
-        questionFeatures.consecutiveCorrect || 0,
-        questionFeatures.timeOfDay || (new Date().getHours() / 24)
-      ];
+      // Create base features object
+      const baseFeatures = {
+        memoryStrength: questionFeatures.memoryStrength || 1,
+        difficultyRating: questionFeatures.difficultyRating || 0.5,
+        timeSinceLastReview: questionFeatures.timeSinceLastReview || 0,
+        successRate: questionFeatures.successRate || 0,
+        averageResponseTime: questionFeatures.averageResponseTime || 0,
+        totalReviews: questionFeatures.totalReviews || 0,
+        consecutiveCorrect: questionFeatures.consecutiveCorrect || 0,
+        timeOfDay: questionFeatures.timeOfDay || (new Date().getHours() / 24)
+      };
+
+      // Generate advanced features (51 dimensions)
+      const advancedFeatures = createAdvancedFeatureVector(baseFeatures, reviewHistory);
+      const featureVector = getFeatureArray(advancedFeatures);
 
       const normalizedFeatures = this.normalizeFeatures(featureVector);
 
