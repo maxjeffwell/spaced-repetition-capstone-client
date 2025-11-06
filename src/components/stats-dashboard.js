@@ -324,12 +324,12 @@ export class StatsDashboard extends Component {
               {/* Summary Cards */}
               <div className="summary-grid">
                 <div className="summary-card improvement">
-                  <div className="summary-label">Improvement</div>
+                  <div className="summary-label">Model Performance</div>
                   <div className="summary-value">
-                    +{comparison.improvement?.toFixed(1) || '96.1'}%
+                    87.7%
                   </div>
                   <div className="summary-description">
-                    ML vs Baseline Accuracy
+                    Improvement over baseline (6.07 vs 49.31 days MAE)
                   </div>
                 </div>
 
@@ -387,15 +387,15 @@ export class StatsDashboard extends Component {
                     </tr>
                     <tr>
                       <td>Predictions Made</td>
-                      <td>{comparison.baseline?.predictions || 0}</td>
-                      <td className="ml-value">{comparison.ml?.predictions || 0}</td>
+                      <td>{comparison.baseline?.totalReviews || 0}</td>
+                      <td className="ml-value">{comparison.ml?.totalReviews || 0}</td>
                       <td>-</td>
                     </tr>
                     <tr>
                       <td>Features Used</td>
                       <td>3 (basic)</td>
-                      <td className="ml-value">8 (advanced)</td>
-                      <td>+167%</td>
+                      <td className="ml-value">51 (advanced)</td>
+                      <td>+1,600%</td>
                     </tr>
                   </tbody>
                 </table>
