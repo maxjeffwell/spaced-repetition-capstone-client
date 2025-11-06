@@ -324,12 +324,12 @@ export class StatsDashboard extends Component {
               {/* Summary Cards */}
               <div className="summary-grid">
                 <div className="summary-card improvement">
-                  <div className="summary-label">Model Performance</div>
+                  <div className="summary-label">Model Test Accuracy</div>
                   <div className="summary-value">
                     87.7%
                   </div>
                   <div className="summary-description">
-                    Improvement over baseline (6.07 vs 49.31 days MAE)
+                    Offline evaluation (6.07 vs 49.31 days MAE)
                   </div>
                 </div>
 
@@ -366,7 +366,12 @@ export class StatsDashboard extends Component {
 
               {/* Algorithm Comparison Table */}
               <div className="comparison-table-container">
-                <h2>Algorithm Performance</h2>
+                <h2>Production Algorithm Comparison</h2>
+                <p style={{color: '#888', marginBottom: '1rem', fontSize: '0.9rem'}}>
+                  {comparison.ml?.totalReviews > 0
+                    ? `Comparing ${comparison.baseline?.totalReviews || 0} baseline vs ${comparison.ml?.totalReviews || 0} ML predictions in production`
+                    : '⚠️ No ML predictions yet - use the app to generate ML prediction data'}
+                </p>
                 <table className="comparison-table">
                   <thead>
                     <tr>
