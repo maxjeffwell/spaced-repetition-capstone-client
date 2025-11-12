@@ -30,6 +30,7 @@ class MLDemo extends Component {
       activations: null,
       featureNames: [],
     };
+    this.metricsPollingInterval = null;
   }
 
   async componentDidMount() {
@@ -55,6 +56,9 @@ class MLDemo extends Component {
       // Run test predictions
       this.runTestPredictions();
 
+      // Start polling metrics every 1 second
+      this.startMetricsPolling();
+
     } catch (error) {
       console.error('Failed to initialize ML service:', error);
       this.setState({
@@ -62,6 +66,30 @@ class MLDemo extends Component {
         isLoading: false
       });
     }
+  }
+
+  componentWillUnmount() {
+    // Clean up polling interval
+    if (this.metricsPollingInterval) {
+      clearInterval(this.metricsPollingInterval);
+    }
+  }
+
+  startMetricsPolling() {
+    // Update metrics every 1 second
+    this.metricsPollingInterval = setInterval(() => {
+      this.updateMetrics();
+    }, 1000);
+  }
+
+  updateMetrics() {
+    const updatedMetrics = mlService.getMetrics();
+    this.setState(prevState => ({
+      mlInfo: {
+        ...prevState.mlInfo,
+        metrics: updatedMetrics
+      }
+    }));
   }
 
   async runTestPredictions() {
