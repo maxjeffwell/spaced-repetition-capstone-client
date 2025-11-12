@@ -186,6 +186,15 @@
   font-family: 'Courier New', monospace;
 }
 
+.visualizerContainer {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 65, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 24px 0;
+  overflow-x: auto;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .featureGrid {

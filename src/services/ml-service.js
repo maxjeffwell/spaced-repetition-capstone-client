@@ -190,13 +190,38 @@ class MLService {
       return {
         interval,
         predictionTime,
-        backend: this.backend
+        backend: this.backend,
+        advancedFeatures,
+        normalizedFeatures,
       };
 
     } catch (error) {
       console.error('Prediction error:', error);
       throw error;
     }
+  }
+
+  /**
+   * Get activations from all layers for visualization
+   */
+  async getActivations(normalizedFeatures) {
+    if (!this.isLoaded || !this.model) {
+      throw new Error('Model not loaded');
+    }
+
+    // Create a model that outputs all intermediate activations
+    const activationModel = tf.model({
+      inputs: this.model.inputs,
+      outputs: this.model.layers.map(layer => layer.output)
+    });
+
+    const inputTensor = tf.tensor2d([normalizedFeatures]);
+    const activations = activationModel.predict(inputTensor);
+
+    // Add input tensor to the beginning of the activations array
+    const allActivations = [inputTensor, ...activations];
+
+    return allActivations;
   }
 
   /**

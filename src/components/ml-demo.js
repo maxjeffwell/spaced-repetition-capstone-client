@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import mlService from '../services/ml-service';
+import { getFeatureNames } from '../services/advanced-features';
 import MLStatus from './ml-status';
+import NeuralNetworkVisualizer from './neural-network-visualizer';
 import styles from './ml-demo.module.css';
 
 /**
@@ -21,7 +23,9 @@ export default class MLDemo extends Component {
       },
       testResults: [],
       isLoading: true,
-      error: null
+      error: null,
+      activations: null,
+      featureNames: [],
     };
   }
 
@@ -41,7 +45,8 @@ export default class MLDemo extends Component {
           metrics: mlService.getMetrics(),
           backendInfo: mlService.getBackendInfo().current
         },
-        isLoading: false
+        isLoading: false,
+        featureNames: getFeatureNames(),
       });
 
       // Run test predictions
@@ -115,10 +120,17 @@ export default class MLDemo extends Component {
     ];
 
     const results = [];
+    let firstPrediction = true;
 
     for (const testCase of testCases) {
       try {
         const prediction = await mlService.predict(testCase.features);
+
+        if (firstPrediction) {
+          const activations = await mlService.getActivations(prediction.normalizedFeatures);
+          this.setState({ activations });
+          firstPrediction = false;
+        }
 
         results.push({
           name: testCase.name,
@@ -147,7 +159,7 @@ export default class MLDemo extends Component {
   }
 
   render() {
-    const { mlInfo, testResults, isLoading, error } = this.state;
+    const { mlInfo, testResults, isLoading, error, activations, featureNames } = this.state;
 
     if (error) {
       return (
@@ -173,6 +185,13 @@ export default class MLDemo extends Component {
         <h2>🤖 ML-Enhanced Predictions</h2>
 
         <MLStatus mlInfo={mlInfo} />
+
+        {activations && (
+          <div className={styles.visualizerContainer}>
+            <h3>Neural Network State (First Prediction)</h3>
+            <NeuralNetworkVisualizer activations={activations} featureNames={featureNames} />
+          </div>
+        )}
 
         <div className={styles.testResults}>
           <h3>Test Predictions</h3>
