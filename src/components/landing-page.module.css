@@ -29,16 +29,22 @@
 
 .logoGrid {
   display: inline-flex;
+  flex-direction: column;
   gap: 4px;
-  flex-wrap: wrap;
   justify-content: center;
   margin: 0 auto;
+}
+
+.logoRow {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
 }
 
 .logoLetter {
   font-family: 'TRT INTERVAL', monospace, sans-serif;
   font-size: 48px;
-  color: #00ff41;
+  color: rgb(213, 17, 124);
   background: rgba(0, 255, 65, 0.1);
   border: 2px solid #00ff41;
   border-radius: 8px;

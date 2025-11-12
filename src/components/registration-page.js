@@ -14,11 +14,20 @@ export function RegistrationPage(props) {
             <div className={styles.landingContainer}>
                 <div className={styles.brandLogo}>
                     <div className={styles.logoGrid}>
-                        {'INTERVALAI'.split('').map((letter, index) => (
-                            <div key={index} className={styles.logoLetter}>
-                                {letter}
-                            </div>
-                        ))}
+                        <div className={styles.logoRow}>
+                            {'INTERVAL'.split('').map((letter, index) => (
+                                <div key={index} className={styles.logoLetter}>
+                                    {letter}
+                                </div>
+                            ))}
+                        </div>
+                        <div className={styles.logoRow}>
+                            {'AI'.split('').map((letter, index) => (
+                                <div key={`ai-${index}`} className={styles.logoLetter}>
+                                    {letter}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
