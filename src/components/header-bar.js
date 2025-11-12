@@ -27,7 +27,7 @@ export class HeaderBar extends React.Component {
         }
         return (
             <div className="header-bar">
-                <h1>🧠 IntervalAI - Neural Learning</h1>
+                <h1>🧠 IntervalAI</h1>
                 {navLinks}
                 {logOutButton}
             </div>
