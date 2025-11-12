@@ -8,7 +8,7 @@ IntervalAI combines the proven SM-2 spaced repetition algorithm with a custom ne
 
 ## Key Features
 
-- **ML-Powered Scheduling**: 8-layer neural network (961 parameters) predicts optimal review intervals
+- **ML-Powered Scheduling**: 10-layer deep neural network with 51 engineered features predicts optimal review intervals
 - **96.1% Improvement**: Over baseline SM-2 algorithm (MAE: 0.0735 days vs 1.8889 days)
 - **WebGPU Acceleration**: Hardware-accelerated ML inference with automatic fallbacks
 - **A/B Testing**: Built-in performance comparison between algorithms
@@ -155,19 +155,14 @@ Launches the test runner in interactive watch mode.
 - **Baseline MAE**: 1.8889 days
 - **Improvement**: 96.1% over baseline
 - **Inference time**: <1ms (WebGPU)
-- **Model size**: 961 parameters
+- **Model architecture**: 10 layers (5 dense + batch normalization + dropout)
+- **Input features**: 51 engineered features from 8 base features
 
 ## Feature Engineering
 
-The ML model uses 8 input features:
-- Memory strength
-- Difficulty rating
-- Time since last review
-- Success rate
-- Average response time
-- Total reviews
-- Consecutive correct answers
-- Time of day
+The ML model transforms 8 base features into 51 advanced features using:
+- **Base features**: Memory strength, difficulty rating, time since last review, success rate, average response time, total reviews, consecutive correct answers, time of day
+- **Advanced techniques**: Forgetting curve modeling (Ebbinghaus exponential decay), interaction features, polynomial features, cyclical time encoding, moving averages, momentum features, retention prediction
 
 ## Backend Repository
 
