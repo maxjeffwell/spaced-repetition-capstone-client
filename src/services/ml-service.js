@@ -185,7 +185,19 @@ class MLService {
       const inputTensor = tf.tensor2d([normalizedFeatures]);
       const predictionTensor = this.model.predict(inputTensor);
       const predictionData = await predictionTensor.data();
-      const interval = Math.max(1, Math.round(predictionData[0]));
+      const rawPrediction = predictionData[0];
+
+      // Debug logging
+      console.log('🔍 ML Prediction Debug:');
+      console.log('  Raw model output:', rawPrediction);
+      console.log('  First 10 normalized features:', normalizedFeatures.slice(0, 10));
+      console.log('  Question features:', {
+        memoryStrength: questionFeatures.memoryStrength,
+        successRate: questionFeatures.successRate,
+        totalReviews: questionFeatures.totalReviews
+      });
+
+      const interval = Math.max(1, Math.round(rawPrediction));
 
       // Cleanup tensors
       inputTensor.dispose();
