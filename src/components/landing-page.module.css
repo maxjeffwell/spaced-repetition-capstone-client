@@ -331,3 +331,75 @@
     padding: 20px;
   }
 }
+
+@media (max-width: 420px) {
+  .landingPage {
+    padding: 12px;
+  }
+
+  .logoLetter {
+    font-size: 24px;
+    padding: 6px 8px;
+    min-width: 30px;
+    gap: 2px;
+  }
+
+  .logoRow {
+    gap: 2px;
+  }
+
+  .logoGrid {
+    gap: 2px;
+  }
+
+  .landingHeader h1 {
+    font-size: 24px;
+  }
+
+  .landingSubtitle {
+    font-size: 13px;
+  }
+
+  .loginSection {
+    padding: 16px;
+  }
+
+  .loginSection h2 {
+    font-size: 20px;
+  }
+
+  .loginForm input {
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .loginForm button {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  .feature {
+    padding: 16px;
+  }
+
+  .feature h3 {
+    font-size: 14px;
+  }
+
+  .feature p {
+    font-size: 13px;
+  }
+
+  .registerSection {
+    padding: 20px;
+  }
+
+  .registerSection p {
+    font-size: 14px;
+  }
+
+  .registerLink {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}
