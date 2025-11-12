@@ -11,6 +11,16 @@ html, body, #root {
 
 body {
   font-family: sans-serif;
-  background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%);
-  background-attachment: fixed;
+    background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%) fixed;
+}
+
+/* Form validation error styling */
+.form-error {
+  background: rgba(255, 20, 147, 0.1);
+  border: 2px solid #ff1493;
+  border-radius: 8px;
+    padding: 12px 12px 20px;
+    margin-top: 8px;
+  color: #ff6699;
+  font-size: 14px;
 }

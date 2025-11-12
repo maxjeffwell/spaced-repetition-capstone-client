@@ -1,15 +1,11 @@
-/* TRT INTERVAL Font - Uncomment when you add the font files to public/fonts/ */
-/*
 @font-face {
   font-family: 'TRT INTERVAL';
-  src: url('/fonts/TRT-INTERVAL.woff2') format('woff2'),
-       url('/fonts/TRT-INTERVAL.woff') format('woff'),
-       url('/fonts/TRT-INTERVAL.ttf') format('truetype');
+  src: url('./fonts/TRTINTERVAL-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
-*/
+
 
 .landingPage {
   min-height: 100vh;

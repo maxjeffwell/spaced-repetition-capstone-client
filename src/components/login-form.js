@@ -26,7 +26,7 @@ export class LoginForm extends React.Component {
                     this.onSubmit(values)
                 )}>
                 {error}
-                <label htmlFor="username (your email)">Username (your email)</label>
+                <label htmlFor="username">Username</label>
                 <Field
                     component={Input}
                     type="text"
