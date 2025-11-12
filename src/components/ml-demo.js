@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import mlService from '../services/ml-service';
 import { getFeatureNames } from '../services/advanced-features';
 import MLStatus from './ml-status';
+import NavBar from './nav-bar';
 import NeuralNetworkVisualizer from './neural-network-visualizer';
 import styles from './ml-demo.module.css';
 
@@ -183,6 +184,9 @@ export default class MLDemo extends Component {
     return (
       <div className={styles.mlDemo}>
         <h2>🤖 ML-Enhanced Predictions</h2>
+
+        {/* Navigation */}
+        <NavBar />
 
         <MLStatus mlInfo={mlInfo} />
 

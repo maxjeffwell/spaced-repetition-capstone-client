@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import apiService from '../services/api-service';
 import mlService from '../services/ml-service';
 import MLStatus from './ml-status';
+import NavBar from './nav-bar';
 import styles from './learning-page.module.css';
 
 export class LearningPage extends Component {
@@ -167,6 +168,9 @@ export class LearningPage extends Component {
       <div className={styles.learningPage}>
         <div className={styles.learningContainer}>
           <h1>🧠 Neural-Enhanced Learning</h1>
+
+          {/* Navigation */}
+          <NavBar />
 
           {/* ML Status Banner */}
           <MLStatus mlInfo={mlInfo} />

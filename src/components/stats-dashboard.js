@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Chart, registerables } from 'chart.js';
 import apiService from '../services/api-service';
+import NavBar from './nav-bar';
 import styles from './stats-dashboard.module.css';
 
 // Register Chart.js components
@@ -305,6 +306,9 @@ export class StatsDashboard extends Component {
       <div className={styles.statsDashboard}>
         <div className={styles.statsContainer}>
           <h1>📊 Performance Analytics</h1>
+
+          {/* Navigation */}
+          <NavBar />
 
           {loading && (
             <div className={styles.loading}>
