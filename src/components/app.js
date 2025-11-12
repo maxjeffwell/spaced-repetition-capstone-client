@@ -2,12 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Routes, Route} from 'react-router-dom';
 
-import HeaderBar from './header-bar';
 import LandingPage from './landing-page';
 import Dashboard from './dashboard';
 import LearningPage from './learning-page';
 import StatsDashboard from './stats-dashboard';
 import RegistrationPage from './registration-page';
+import MLDemo from './ml-demo';
 import {refreshAuthToken} from '../actions/auth';
 
 export class App extends React.Component {
@@ -43,12 +43,12 @@ export class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <HeaderBar />
                 <Routes>
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/learn" element={<LearningPage />} />
                     <Route path="/stats" element={<StatsDashboard />} />
+                    <Route path="/ml-demo" element={<MLDemo />} />
                     <Route path="/register" element={<RegistrationPage />} />
                 </Routes>
             </div>
