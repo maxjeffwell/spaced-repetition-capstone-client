@@ -12,6 +12,16 @@ export function RegistrationPage(props) {
     return (
         <div className={styles.landingPage}>
             <div className={styles.landingContainer}>
+                <div className={styles.brandLogo}>
+                    <div className={styles.logoGrid}>
+                        {'INTERVALAI'.split('').map((letter, index) => (
+                            <div key={index} className={styles.logoLetter}>
+                                {letter}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 <div className={styles.landingHeader}>
                     <h1>🧠 Neural-Enhanced Learning</h1>
                     <p className={styles.landingSubtitle}>

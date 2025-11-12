@@ -1,3 +1,16 @@
+/* TRT INTERVAL Font - Uncomment when you add the font files to public/fonts/ */
+/*
+@font-face {
+  font-family: 'TRT INTERVAL';
+  src: url('/fonts/TRT-INTERVAL.woff2') format('woff2'),
+       url('/fonts/TRT-INTERVAL.woff') format('woff'),
+       url('/fonts/TRT-INTERVAL.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
 .landingPage {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%);
@@ -10,6 +23,59 @@
 .landingContainer {
   max-width: 600px;
   width: 100%;
+}
+
+/* Logo/Brand Header */
+.brandLogo {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.logoGrid {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.logoLetter {
+  font-family: 'TRT INTERVAL', monospace, sans-serif;
+  font-size: 48px;
+  color: #00ff41;
+  background: rgba(0, 255, 65, 0.1);
+  border: 2px solid #00ff41;
+  border-radius: 8px;
+  padding: 12px 16px;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.3),
+              inset 0 0 20px rgba(0, 255, 65, 0.1);
+  transition: all 0.3s ease;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.logoLetter:hover {
+  transform: translateY(-4px);
+  background: rgba(0, 255, 65, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 255, 65, 0.5),
+              inset 0 0 30px rgba(0, 255, 65, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    border-color: #00ff41;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.1);
+  }
+  50% {
+    border-color: rgba(0, 255, 65, 0.8);
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.5),
+                inset 0 0 30px rgba(0, 255, 65, 0.2);
+  }
 }
 
 .landingHeader {
