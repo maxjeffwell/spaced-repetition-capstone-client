@@ -15,7 +15,7 @@ export function LandingPage(props) {
         <div className="landing-page">
             <div className="landing-container">
                 <div className="landing-header">
-                    <h1>🧠 IntervalAI - Neural-Enhanced Learning</h1>
+                    <h1>🧠 Neural-Enhanced Learning</h1>
                     <p className="landing-subtitle">
                         Master Spanish vocabulary with AI-powered spaced repetition
                     </p>
