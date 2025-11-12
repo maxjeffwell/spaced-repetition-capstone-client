@@ -199,10 +199,12 @@ class MLService {
 
       // Sanity check: If model predicts unreasonably low interval for well-performing cards,
       // it indicates model issues. Return null so server can use baseline algorithm.
-      const hasExperience = questionFeatures.totalReviews > 5;
-      const isPerformingWell = questionFeatures.successRate > 0.6;
+      // Note: Temporarily disabled as model is trained on short-interval data
+      // Will re-enable once we have more long-interval training data
+      const hasExperience = questionFeatures.totalReviews > 10;
+      const isPerformingWell = questionFeatures.successRate > 0.8;
 
-      if (rawPrediction < 1.5 && hasExperience && isPerformingWell) {
+      if (rawPrediction < 0.5 && hasExperience && isPerformingWell) {
         console.warn('⚠️ ML model predicting unreasonably low interval. Model may need retraining.');
         console.warn('   Letting server use baseline algorithm instead.');
         return null; // Signal to use server-side baseline
