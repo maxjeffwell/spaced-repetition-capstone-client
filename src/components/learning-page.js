@@ -142,9 +142,15 @@ export class LearningPage extends Component {
             this.state.questionFeatures,
             this.state.reviewHistory
           );
-          predictedInterval = prediction.interval;
-          predictionTime = prediction.predictionTime;
-          console.log(`✓ Predicted interval: ${predictedInterval} days (${predictionTime.toFixed(2)}ms)`);
+
+          // If prediction is null, model detected unreasonable prediction
+          if (prediction === null) {
+            console.log('⚠️ ML model prediction skipped, server will use baseline');
+          } else {
+            predictedInterval = prediction.interval;
+            predictionTime = prediction.predictionTime;
+            console.log(`✓ Predicted interval: ${predictedInterval} days (${predictionTime.toFixed(2)}ms)`);
+          }
         } catch (mlError) {
           console.error('Client-side prediction failed, server will use fallback:', mlError);
         }

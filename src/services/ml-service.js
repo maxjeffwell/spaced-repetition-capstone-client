@@ -197,6 +197,17 @@ class MLService {
         totalReviews: questionFeatures.totalReviews
       });
 
+      // Sanity check: If model predicts unreasonably low interval for well-performing cards,
+      // it indicates model issues. Return null so server can use baseline algorithm.
+      const hasExperience = questionFeatures.totalReviews > 5;
+      const isPerformingWell = questionFeatures.successRate > 0.6;
+
+      if (rawPrediction < 2 && hasExperience && isPerformingWell) {
+        console.warn('⚠️ ML model predicting unreasonably low interval. Model may need retraining.');
+        console.warn('   Letting server use baseline algorithm instead.');
+        return null; // Signal to use server-side baseline
+      }
+
       const interval = Math.max(1, Math.round(rawPrediction));
 
       // Cleanup tensors
