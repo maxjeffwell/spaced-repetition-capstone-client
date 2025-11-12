@@ -1,21 +1,21 @@
 {
   "modelVersion": "1.0.0",
-  "trainedDate": "2025-11-07T01:24:00.918153",
+  "trainedDate": "2025-11-12T07:44:15.870862",
   "numFeatures": 51,
   "architecture": "51\u2192128\u219264\u219232\u219216\u21921",
-  "trainingSize": 3276,
-  "testSize": 819,
+  "trainingSize": 3518,
+  "testSize": 880,
   "performance": {
-    "testMAE": 5.760409355163574,
-    "testLoss": 272.22833251953125,
-    "baselineMAE": 108.43962860107422,
-    "improvement": 94.68791198730469
+    "testMAE": NaN,
+    "testLoss": NaN,
+    "baselineMAE": 4909.95751953125,
+    "improvement": NaN
   },
   "training": {
     "epochs": 100,
     "batchSize": 32,
     "learningRate": 0.001,
     "validationSplit": 0.2,
-    "trainingTime": 23.43131184577942
+    "trainingTime": 22.001038074493408
   }
 }
