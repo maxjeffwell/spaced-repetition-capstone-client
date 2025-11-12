@@ -135,10 +135,18 @@ class MLService {
     }
 
     const normalized = [];
+    const MIN_STD = 1e-7; // Minimum std to avoid division by zero
+
     for (let i = 0; i < features.length; i++) {
       const mean = this.normalizationStats.mean[i];
       const std = this.normalizationStats.std[i];
-      normalized.push((features[i] - mean) / std);
+
+      // If std is too small (constant feature), just subtract mean
+      if (Math.abs(std) < MIN_STD) {
+        normalized.push(features[i] - mean);
+      } else {
+        normalized.push((features[i] - mean) / std);
+      }
     }
 
     return normalized;
