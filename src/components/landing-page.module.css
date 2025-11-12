@@ -265,6 +265,30 @@
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .landingPage {
+    padding: 16px;
+  }
+
+  .logoLetter {
+    font-size: 40px;
+    padding: 10px 14px;
+    min-width: 45px;
+  }
+
+  .landingHeader h1 {
+    font-size: 40px;
+  }
+
+  .loginSection {
+    padding: 28px;
+  }
+
+  .feature {
+    padding: 18px;
+  }
+}
+
 @media (max-width: 768px) {
   .landingHeader h1 {
     font-size: 36px;
@@ -285,5 +309,25 @@
 
   .featureIcon {
     font-size: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logoLetter {
+    font-size: 32px;
+    padding: 8px 12px;
+    min-width: 40px;
+  }
+
+  .landingHeader h1 {
+    font-size: 28px;
+  }
+
+  .landingSubtitle {
+    font-size: 14px;
+  }
+
+  .loginSection {
+    padding: 20px;
   }
 }

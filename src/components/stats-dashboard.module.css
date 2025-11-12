@@ -262,6 +262,29 @@
   }
 }
 
+@media (max-width: 900px) {
+  .statsDashboard {
+    padding: 16px;
+  }
+
+  .summaryGrid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .comparisonTable {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .comparisonTableContainer {
+    padding: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .summaryGrid {
     grid-template-columns: 1fr;

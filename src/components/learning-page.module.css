@@ -433,6 +433,33 @@
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .learningPage {
+    padding: 16px;
+  }
+
+  .questionCard {
+    padding: 36px;
+  }
+
+  .questionText {
+    font-size: 52px;
+  }
+
+  .answerInput {
+    padding: 18px;
+    font-size: 22px;
+  }
+
+  .comparisonGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .performanceStats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .statsBar {
     grid-template-columns: 1fr;
@@ -452,5 +479,24 @@
 
   .intervalValue {
     font-size: 56px;
+  }
+}
+
+@media (max-width: 480px) {
+  .questionCard {
+    padding: 24px;
+  }
+
+  .questionText {
+    font-size: 36px;
+  }
+
+  .answerInput {
+    padding: 16px;
+    font-size: 18px;
+  }
+
+  .intervalValue {
+    font-size: 48px;
   }
 }
