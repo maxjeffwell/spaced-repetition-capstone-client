@@ -196,6 +196,13 @@
 }
 
 /* Responsive */
+@media (max-width: 1180px) {
+  /* Hide neural network visualization on smaller screens */
+  .visualizerContainer {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .mlDemo {
     padding: 16px;
@@ -207,10 +214,6 @@
 
   .featureGrid {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .visualizerContainer {
-    overflow-x: auto;
   }
 }
 
