@@ -12,9 +12,12 @@ export const setAuthToken = authToken => ({
 });
 
 export const CLEAR_AUTH = 'CLEAR_AUTH';
-export const clearAuth = () => ({
-    type: CLEAR_AUTH
-});
+export const clearAuth = () => dispatch => {
+    clearAuthToken();
+    dispatch({
+        type: CLEAR_AUTH
+    });
+};
 
 export const AUTH_REQUEST = 'AUTH_REQUEST';
 export const authRequest = () => ({
