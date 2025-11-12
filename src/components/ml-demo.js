@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import mlService from '../services/ml-service';
 import { getFeatureNames } from '../services/advanced-features';
 import MLStatus from './ml-status';
@@ -11,7 +13,7 @@ import styles from './ml-demo.module.css';
  *
  * Tests and demonstrates WebGPU-accelerated ML predictions
  */
-export default class MLDemo extends Component {
+class MLDemo extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -160,6 +162,11 @@ export default class MLDemo extends Component {
   }
 
   render() {
+    // Redirect to login if not authenticated
+    if (!this.props.loggedIn) {
+      return <Navigate to="/" replace />;
+    }
+
     const { mlInfo, testResults, isLoading, error, activations, featureNames } = this.state;
 
     if (error) {
@@ -255,3 +262,9 @@ export default class MLDemo extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  loggedIn: state.auth.currentUser !== null
+});
+
+export default connect(mapStateToProps)(MLDemo);

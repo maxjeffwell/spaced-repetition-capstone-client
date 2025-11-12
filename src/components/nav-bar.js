@@ -11,6 +11,22 @@ export function NavBar(props) {
 
   return (
     <nav className={styles.navBar}>
+      <div className={styles.logoContainer}>
+        <div className={styles.logoRow}>
+          {'INTERVAL'.split('').map((letter, index) => (
+            <div key={index} className={styles.logoLetter}>
+              {letter}
+            </div>
+          ))}
+        </div>
+        <div className={styles.logoRow}>
+          {'AI'.split('').map((letter, index) => (
+            <div key={`ai-${index}`} className={styles.logoLetter}>
+              {letter}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className={styles.navLinks}>
         <Link to="/learn" className={styles.navLink}>
           📚 Learn
