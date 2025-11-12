@@ -429,7 +429,7 @@ export class StatsDashboard extends Component {
               <div className={styles.cardStatusContainer}>
                 <h2>Card Status Overview</h2>
                 <div className={styles.cardsList}>
-                  {progress.cards && progress.cards.slice(0, 10).map((card, index) => (
+                  {progress.cards && progress.cards.map((card, index) => (
                     <div key={index} className={styles.cardItem}>
                       <div className={styles.cardQuestion}>{card.question || `Card ${index + 1}`}</div>
                       <div className={styles.cardStats}>
