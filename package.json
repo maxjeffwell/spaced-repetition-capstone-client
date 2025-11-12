@@ -1,6 +1,7 @@
 {
-  "name": "client",
+  "name": "intervalai-client",
   "version": "0.1.0",
+  "description": "IntervalAI - Neural-enhanced spaced repetition learning system",
   "private": true,
   "dependencies": {
     "@tensorflow/tfjs": "^4.22.0",

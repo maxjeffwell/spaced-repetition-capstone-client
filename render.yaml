@@ -1,7 +1,7 @@
 services:
   # Frontend (React + TensorFlow.js WebGPU)
   - type: web
-    name: spaced-repetition-client
+    name: intervalai-client
     runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: build
