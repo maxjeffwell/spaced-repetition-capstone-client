@@ -442,9 +442,6 @@ export class StatsDashboard extends Component {
                         <span className={styles.cardStat}>
                           <label>Interval:</label> {card.memoryStrength || 1} days
                         </span>
-                        <span className={styles.cardStat}>
-                          <label>Next:</label> {card.nextReview ? new Date(card.nextReview).toLocaleDateString() : 'N/A'}
-                        </span>
                       </div>
                     </div>
                   ))}
