@@ -3,6 +3,7 @@ import {Field, reduxForm, focus} from 'redux-form';
 import Input from './input';
 import {login} from '../actions/auth';
 import {required, nonEmpty} from '../validators';
+import styles from './landing-page.module.css';
 
 export class LoginForm extends React.Component {
     onSubmit(values) {
@@ -13,14 +14,14 @@ export class LoginForm extends React.Component {
         let error;
         if (this.props.error) {
             error = (
-                <div className="form-error" aria-live="polite">
+                <div className={styles.formError} aria-live="polite">
                     {this.props.error}
                 </div>
             );
         }
         return (
             <form
-                className="login-form"
+                className={styles.loginForm}
                 onSubmit={this.props.handleSubmit(values =>
                     this.onSubmit(values)
                 )}>
