@@ -89,15 +89,18 @@ class MLService {
       await this.initializeBackend();
 
       // Load model using TensorFlow.js built-in loader
+      // Add cache-busting parameter to force fresh fetch
+      const cacheBuster = `?v=${Date.now()}`;
+      const modelUrlWithCache = modelPath + cacheBuster;
       console.log(`\n📥 Loading model from ${modelPath}...`);
-      this.model = await tf.loadLayersModel(modelPath);
+      this.model = await tf.loadLayersModel(modelUrlWithCache);
 
-      // Load normalization stats
-      const statsResponse = await fetch('/models/normalization-stats.json');
+      // Load normalization stats (with cache busting)
+      const statsResponse = await fetch(`/models/normalization-stats.json${cacheBuster}`);
       this.normalizationStats = await statsResponse.json();
 
-      // Load metadata
-      const metadataResponse = await fetch('/models/metadata.json');
+      // Load metadata (with cache busting)
+      const metadataResponse = await fetch(`/models/metadata.json${cacheBuster}`);
       const metadata = await metadataResponse.json();
 
       const loadTime = performance.now() - startTime;
