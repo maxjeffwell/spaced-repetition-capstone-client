@@ -1,4 +1,4 @@
-.landing-page {
+.landingPage {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0e27 0%, #16213e 50%, #0a0e27 100%);
   padding: 24px;
@@ -7,24 +7,24 @@
   justify-content: center;
 }
 
-.landing-container {
+.landingContainer {
   max-width: 600px;
   width: 100%;
 }
 
-.landing-header {
+.landingHeader {
   text-align: center;
   margin-bottom: 48px;
 }
 
-.landing-header h1 {
+.landingHeader h1 {
   color: #00ff41;
   font-size: 48px;
   text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
   margin: 0 0 16px 0;
 }
 
-.landing-subtitle {
+.landingSubtitle {
   color: #aaa;
   font-size: 18px;
   margin: 0;
@@ -32,7 +32,7 @@
 }
 
 /* Login Section */
-.login-section {
+.loginSection {
   background: linear-gradient(135deg, #1e1e3f 0%, #2a2a4a 100%);
   border: 2px solid #00ff41;
   border-radius: 16px;
@@ -41,7 +41,7 @@
   box-shadow: 0 8px 32px rgba(0, 255, 65, 0.2);
 }
 
-.login-section h2 {
+.loginSection h2 {
   color: #00ff41;
   text-align: center;
   font-size: 24px;
@@ -51,13 +51,13 @@
 }
 
 /* Login Form Styling */
-.login-form {
+.loginForm {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
-.login-form label {
+.loginForm label {
   color: #888;
   font-size: 12px;
   text-transform: uppercase;
@@ -65,7 +65,7 @@
   margin-bottom: 4px;
 }
 
-.login-form input {
+.loginForm input {
   width: 100%;
   padding: 16px;
   font-size: 16px;
@@ -76,13 +76,13 @@
   transition: all 0.3s ease;
 }
 
-.login-form input:focus {
+.loginForm input:focus {
   outline: none;
   border-color: #ff1493;
   box-shadow: 0 0 20px rgba(255, 20, 147, 0.3);
 }
 
-.login-form button {
+.loginForm button {
   width: 100%;
   padding: 16px;
   font-size: 18px;
@@ -98,17 +98,17 @@
   margin-top: 8px;
 }
 
-.login-form button:hover:not(:disabled) {
+.loginForm button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 255, 65, 0.4);
 }
 
-.login-form button:disabled {
+.loginForm button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.form-error {
+.formError {
   background: rgba(255, 20, 147, 0.1);
   border: 2px solid #ff1493;
   border-radius: 8px;
@@ -119,7 +119,7 @@
 }
 
 /* Features Section */
-.features-section {
+.featuresSection {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -143,7 +143,7 @@
   transform: translateY(-2px);
 }
 
-.feature-icon {
+.featureIcon {
   font-size: 36px;
   flex-shrink: 0;
 }
@@ -164,7 +164,7 @@
 }
 
 /* Register Section */
-.register-section {
+.registerSection {
   text-align: center;
   padding: 24px;
   background: rgba(0, 0, 0, 0.2);
@@ -172,13 +172,13 @@
   border: 1px solid rgba(255, 20, 147, 0.3);
 }
 
-.register-section p {
+.registerSection p {
   color: #aaa;
   margin: 0 0 16px 0;
   font-size: 16px;
 }
 
-.register-link {
+.registerLink {
   display: inline-block;
   padding: 12px 32px;
   background: linear-gradient(135deg, #ff1493 0%, #cc1077 100%);
@@ -191,22 +191,22 @@
   transition: all 0.3s ease;
 }
 
-.register-link:hover {
+.registerLink:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(255, 20, 147, 0.4);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .landing-header h1 {
+  .landingHeader h1 {
     font-size: 36px;
   }
 
-  .landing-subtitle {
+  .landingSubtitle {
     font-size: 16px;
   }
 
-  .login-section {
+  .loginSection {
     padding: 24px;
   }
 
@@ -215,7 +215,7 @@
     text-align: center;
   }
 
-  .feature-icon {
+  .featureIcon {
     font-size: 48px;
   }
 }

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link, Navigate} from 'react-router-dom';
 
 import LoginForm from './login-form';
-import './landing-page.css';
+import styles from './landing-page.module.css';
 
 export function LandingPage(props) {
     // If we are logged in redirect straight to the learning page
@@ -12,41 +12,41 @@ export function LandingPage(props) {
     }
 
     return (
-        <div className="landing-page">
-            <div className="landing-container">
-                <div className="landing-header">
+        <div className={styles.landingPage}>
+            <div className={styles.landingContainer}>
+                <div className={styles.landingHeader}>
                     <h1>🧠 Neural-Enhanced Learning</h1>
-                    <p className="landing-subtitle">
+                    <p className={styles.landingSubtitle}>
                         Master Spanish vocabulary with AI-powered spaced repetition
                     </p>
                 </div>
 
-                <div className="login-section">
+                <div className={styles.loginSection}>
                     <h2>Sign In</h2>
                     <LoginForm />
                 </div>
 
-                <div className="features-section">
-                    <div className="feature">
-                        <span className="feature-icon">🚀</span>
+                <div className={styles.featuresSection}>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>🚀</span>
                         <h3>WebGPU Acceleration</h3>
                         <p>Lightning-fast ML predictions powered by your GPU</p>
                     </div>
-                    <div className="feature">
-                        <span className="feature-icon">🎯</span>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>🎯</span>
                         <h3>Adaptive Learning</h3>
                         <p>AI predicts optimal review intervals for maximum retention</p>
                     </div>
-                    <div className="feature">
-                        <span className="feature-icon">📊</span>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>📊</span>
                         <h3>Real-time Analytics</h3>
                         <p>Track your progress with detailed performance metrics</p>
                     </div>
                 </div>
 
-                <div className="register-section">
+                <div className={styles.registerSection}>
                     <p>Don't have an account?</p>
-                    <Link to="/register" className="register-link">Create Account</Link>
+                    <Link to="/register" className={styles.registerLink}>Create Account</Link>
                 </div>
             </div>
         </div>

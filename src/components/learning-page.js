@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import apiService from '../services/api-service';
 import mlService from '../services/ml-service';
 import MLStatus from './ml-status';
-import './learning-page.css';
+import styles from './learning-page.module.css';
 
 export class LearningPage extends Component {
   constructor(props) {
@@ -164,64 +164,64 @@ export class LearningPage extends Component {
     const { question, answer, showFeedback, feedback, correct, stats, loading, error, isSubmitting, mlInfo } = this.state;
 
     return (
-      <div className="learning-page">
-        <div className="learning-container">
+      <div className={styles.learningPage}>
+        <div className={styles.learningContainer}>
           <h1>🧠 Neural-Enhanced Learning</h1>
 
           {/* ML Status Banner */}
           <MLStatus mlInfo={mlInfo} />
 
           {/* Stats Bar */}
-          <div className="stats-bar">
-            <div className="stat">
+          <div className={styles.statsBar}>
+            <div className={styles.stat}>
               <label>Reviews</label>
-              <span className="value">{stats.totalReviews}</span>
+              <span className={styles.value}>{stats.totalReviews}</span>
             </div>
-            <div className="stat">
+            <div className={styles.stat}>
               <label>Correct</label>
-              <span className="value correct">{stats.correctAnswers}</span>
+              <span className={`${styles.value} ${styles.correct}`}>{stats.correctAnswers}</span>
             </div>
-            <div className="stat">
+            <div className={styles.stat}>
               <label>Streak</label>
-              <span className="value streak">{stats.currentStreak}🔥</span>
+              <span className={`${styles.value} ${styles.streak}`}>{stats.currentStreak}🔥</span>
             </div>
           </div>
 
           {/* Error Display */}
           {error && (
-            <div className="error-message">
+            <div className={styles.errorMessage}>
               {error}
             </div>
           )}
 
           {/* Loading State */}
           {loading && (
-            <div className="loading">
-              <div className="spinner"></div>
+            <div className={styles.loading}>
+              <div className={styles.spinner}></div>
               <p>Loading question...</p>
             </div>
           )}
 
           {/* Question Display */}
           {!loading && question && !showFeedback && (
-            <div className="question-card">
-              <div className="question-label">Translate to English:</div>
-              <div className="question-text">{question}</div>
+            <div className={styles.questionCard}>
+              <div className={styles.questionLabel}>Translate to English:</div>
+              <div className={styles.questionText}>{question}</div>
 
-              <form onSubmit={this.handleSubmit} className="answer-form">
+              <form onSubmit={this.handleSubmit} className={styles.answerForm}>
                 <input
                   type="text"
                   value={answer}
                   onChange={this.handleAnswerChange}
                   placeholder="Type your answer..."
-                  className="answer-input"
+                  className={styles.answerInput}
                   autoFocus
                   disabled={isSubmitting}
                 />
 
                 <button
                   type="submit"
-                  className="submit-button"
+                  className={styles.submitButton}
                   disabled={isSubmitting || !answer.trim()}
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Answer'}
@@ -232,52 +232,52 @@ export class LearningPage extends Component {
 
           {/* Feedback Display */}
           {showFeedback && feedback && (
-            <div className={`feedback-card ${correct ? 'correct' : 'incorrect'}`}>
-              <div className="feedback-header">
-                <span className="feedback-icon">
+            <div className={`${styles.feedbackCard} ${correct ? styles.correct : styles.incorrect}`}>
+              <div className={styles.feedbackHeader}>
+                <span className={styles.feedbackIcon}>
                   {correct ? '✓' : '✗'}
                 </span>
-                <span className="feedback-text">
+                <span className={styles.feedbackText}>
                   {correct ? 'Correct!' : 'Not Quite'}
                 </span>
               </div>
 
               {!correct && (
-                <div className="correct-answer">
+                <div className={styles.correctAnswer}>
                   The answer was: <strong>{feedback.correctAnswer || 'N/A'}</strong>
                 </div>
               )}
 
-              <div className="interval-info">
+              <div className={styles.intervalInfo}>
                 <h3>Next Review</h3>
-                <div className="interval-display">
-                  <div className="interval-value">{feedback.intervalUsed}</div>
-                  <div className="interval-unit">days</div>
+                <div className={styles.intervalDisplay}>
+                  <div className={styles.intervalValue}>{feedback.intervalUsed}</div>
+                  <div className={styles.intervalUnit}>days</div>
                 </div>
-                <div className="interval-date">
+                <div className={styles.intervalDate}>
                   {new Date(feedback.nextReviewDate).toLocaleDateString()}
                 </div>
               </div>
 
               {/* Algorithm Comparison */}
-              <div className="algorithm-comparison">
+              <div className={styles.algorithmComparison}>
                 <h4>Algorithm Predictions</h4>
-                <div className="comparison-grid">
-                  <div className="algorithm-pred baseline">
+                <div className={styles.comparisonGrid}>
+                  <div className={`${styles.algorithmPred} ${styles.baseline}`}>
                     <label>SM-2 Baseline</label>
-                    <span className="value">{feedback.baselineInterval} days</span>
+                    <span className={styles.value}>{feedback.baselineInterval} days</span>
                   </div>
 
                   {feedback.mlInterval !== null && (
-                    <div className="algorithm-pred ml">
+                    <div className={`${styles.algorithmPred} ${styles.ml}`}>
                       <label>ML Enhanced</label>
-                      <span className="value">{feedback.mlInterval} days</span>
+                      <span className={styles.value}>{feedback.mlInterval} days</span>
                     </div>
                   )}
 
-                  <div className="algorithm-used">
+                  <div className={styles.algorithmUsed}>
                     <label>Used</label>
-                    <span className={`value ${feedback.algorithmUsed}`}>
+                    <span className={`${styles.value} ${styles[feedback.algorithmUsed]}`}>
                       {feedback.algorithmUsed.toUpperCase()}
                     </span>
                   </div>
@@ -285,28 +285,28 @@ export class LearningPage extends Component {
               </div>
 
               {/* Performance Stats */}
-              <div className="performance-stats">
-                <div className="perf-stat">
+              <div className={styles.performanceStats}>
+                <div className={styles.perfStat}>
                   <label>Quality</label>
-                  <span className="value">{feedback.quality}/5</span>
+                  <span className={styles.value}>{feedback.quality}/5</span>
                 </div>
-                <div className="perf-stat">
+                <div className={styles.perfStat}>
                   <label>Success Rate</label>
-                  <span className="value">{(feedback.stats.successRate * 100).toFixed(0)}%</span>
+                  <span className={styles.value}>{(feedback.stats.successRate * 100).toFixed(0)}%</span>
                 </div>
-                <div className="perf-stat">
+                <div className={styles.perfStat}>
                   <label>Total Reviews</label>
-                  <span className="value">{feedback.stats.totalReviews}</span>
+                  <span className={styles.value}>{feedback.stats.totalReviews}</span>
                 </div>
-                <div className="perf-stat">
+                <div className={styles.perfStat}>
                   <label>Consecutive</label>
-                  <span className="value">{feedback.stats.consecutiveCorrect}</span>
+                  <span className={styles.value}>{feedback.stats.consecutiveCorrect}</span>
                 </div>
               </div>
 
               <button
                 onClick={this.handleNext}
-                className="next-button"
+                className={styles.nextButton}
               >
                 Next Question →
               </button>

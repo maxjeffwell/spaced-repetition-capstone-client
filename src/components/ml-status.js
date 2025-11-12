@@ -1,5 +1,5 @@
 import React from 'react';
-import './ml-status.css';
+import styles from './ml-status.module.css';
 
 /**
  * ML Status Component
@@ -12,9 +12,9 @@ import './ml-status.css';
 export default function MLStatus({ mlInfo }) {
   if (!mlInfo || !mlInfo.isLoaded) {
     return (
-      <div className="ml-status loading">
-        <div className="ml-status-header">
-          <span className="ml-icon">🤖</span>
+      <div className={`${styles.mlStatus} ${styles.loading}`}>
+        <div className={styles.mlStatusHeader}>
+          <span className={styles.mlIcon}>🤖</span>
           <span>ML Model Loading...</span>
         </div>
       </div>
@@ -46,29 +46,29 @@ export default function MLStatus({ mlInfo }) {
   const current = backendInfo.current || available[mlInfo.backend] || {};
 
   return (
-    <div className="ml-status" style={{ borderColor: getBackendColor(mlInfo.backend) }}>
-      <div className="ml-status-header">
-        <span className="ml-icon">{getBackendIcon(mlInfo.backend)}</span>
-        <span className="ml-backend">{mlInfo.backend.toUpperCase()}</span>
-        <span className="ml-speedup">{current.speedup || backendInfo.speedup || 'Active'}</span>
+    <div className={styles.mlStatus} style={{ borderColor: getBackendColor(mlInfo.backend) }}>
+      <div className={styles.mlStatusHeader}>
+        <span className={styles.mlIcon}>{getBackendIcon(mlInfo.backend)}</span>
+        <span className={styles.mlBackend}>{mlInfo.backend.toUpperCase()}</span>
+        <span className={styles.mlSpeedup}>{current.speedup || backendInfo.speedup || 'Active'}</span>
       </div>
 
-      <div className="ml-stats">
-        <div className="ml-stat">
+      <div className={styles.mlStats}>
+        <div className={styles.mlStat}>
           <label>Predictions:</label>
-          <span className="value">{mlInfo.metrics?.totalPredictions || 0}</span>
+          <span className={styles.value}>{mlInfo.metrics?.totalPredictions || 0}</span>
         </div>
-        <div className="ml-stat">
+        <div className={styles.mlStat}>
           <label>Avg Time:</label>
-          <span className="value">{(mlInfo.metrics?.avgPredictionTime || 0).toFixed(2)}ms</span>
+          <span className={styles.value}>{(mlInfo.metrics?.avgPredictionTime || 0).toFixed(2)}ms</span>
         </div>
-        <div className="ml-stat">
+        <div className={styles.mlStat}>
           <label>Improvement:</label>
-          <span className="value improvement">+{(mlInfo.metadata?.improvement || 96.1).toFixed(1)}%</span>
+          <span className={`${styles.value} ${styles.improvement}`}>+{(mlInfo.metadata?.improvement || 96.1).toFixed(1)}%</span>
         </div>
       </div>
 
-      <div className="ml-description">
+      <div className={styles.mlDescription}>
         {current.description || 'ML-enhanced predictions'}
       </div>
     </div>

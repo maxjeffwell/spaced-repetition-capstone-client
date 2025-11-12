@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Chart, registerables } from 'chart.js';
 import apiService from '../services/api-service';
-import './stats-dashboard.css';
+import styles from './stats-dashboard.module.css';
 
 // Register Chart.js components
 Chart.register(...registerables);
@@ -302,19 +302,19 @@ export class StatsDashboard extends Component {
     const { comparison, progress, loading, error } = this.state;
 
     return (
-      <div className="stats-dashboard">
-        <div className="stats-container">
+      <div className={styles.statsDashboard}>
+        <div className={styles.statsContainer}>
           <h1>📊 Performance Analytics</h1>
 
           {loading && (
-            <div className="loading">
-              <div className="spinner"></div>
+            <div className={styles.loading}>
+              <div className={styles.spinner}></div>
               <p>Loading statistics...</p>
             </div>
           )}
 
           {error && (
-            <div className="error-message">
+            <div className={styles.errorMessage}>
               {error}
             </div>
           )}
@@ -322,57 +322,57 @@ export class StatsDashboard extends Component {
           {!loading && comparison && progress && (
             <>
               {/* Summary Cards */}
-              <div className="summary-grid">
-                <div className="summary-card improvement">
-                  <div className="summary-label">Model Test Accuracy</div>
-                  <div className="summary-value">
+              <div className={styles.summaryGrid}>
+                <div className={`${styles.summaryCard} ${styles.improvement}`}>
+                  <div className={styles.summaryLabel}>Model Test Accuracy</div>
+                  <div className={styles.summaryValue}>
                     87.7%
                   </div>
-                  <div className="summary-description">
+                  <div className={styles.summaryDescription}>
                     Offline evaluation (6.07 vs 49.31 days MAE)
                   </div>
                 </div>
 
-                <div className="summary-card total-reviews">
-                  <div className="summary-label">Total Reviews</div>
-                  <div className="summary-value">
+                <div className={`${styles.summaryCard} ${styles.totalReviews}`}>
+                  <div className={styles.summaryLabel}>Total Reviews</div>
+                  <div className={styles.summaryValue}>
                     {progress.totalReviews || 0}
                   </div>
-                  <div className="summary-description">
+                  <div className={styles.summaryDescription}>
                     Across all cards
                   </div>
                 </div>
 
-                <div className="summary-card success-rate">
-                  <div className="summary-label">Success Rate</div>
-                  <div className="summary-value">
+                <div className={`${styles.summaryCard} ${styles.successRate}`}>
+                  <div className={styles.summaryLabel}>Success Rate</div>
+                  <div className={styles.summaryValue}>
                     {((progress.successRate || 0) * 100).toFixed(0)}%
                   </div>
-                  <div className="summary-description">
+                  <div className={styles.summaryDescription}>
                     Overall accuracy
                   </div>
                 </div>
 
-                <div className="summary-card active-cards">
-                  <div className="summary-label">Active Cards</div>
-                  <div className="summary-value">
+                <div className={`${styles.summaryCard} ${styles.activeCards}`}>
+                  <div className={styles.summaryLabel}>Active Cards</div>
+                  <div className={styles.summaryValue}>
                     {progress.cards?.length || 0}
                   </div>
-                  <div className="summary-description">
+                  <div className={styles.summaryDescription}>
                     In learning queue
                   </div>
                 </div>
               </div>
 
               {/* Algorithm Comparison Table */}
-              <div className="comparison-table-container">
+              <div className={styles.comparisonTableContainer}>
                 <h2>Production Algorithm Comparison</h2>
                 <p style={{color: '#888', marginBottom: '1rem', fontSize: '0.9rem'}}>
                   {comparison.ml?.totalReviews > 0
                     ? `Comparing ${comparison.baseline?.totalReviews || 0} baseline vs ${comparison.ml?.totalReviews || 0} ML predictions in production`
                     : '⚠️ No ML predictions yet - use the app to generate ML prediction data'}
                 </p>
-                <table className="comparison-table">
+                <table className={styles.comparisonTable}>
                   <thead>
                     <tr>
                       <th>Metric</th>
@@ -385,21 +385,21 @@ export class StatsDashboard extends Component {
                     <tr>
                       <td>Mean Absolute Error</td>
                       <td>{(comparison.baseline?.mae || comparison.baselineMAE || 0).toFixed(4)} days</td>
-                      <td className="ml-value">{(comparison.ml?.mae || comparison.mlMAE || 0).toFixed(4)} days</td>
-                      <td className="improvement-value">
+                      <td className={styles.mlValue}>{(comparison.ml?.mae || comparison.mlMAE || 0).toFixed(4)} days</td>
+                      <td className={styles.improvementValue}>
                         +{comparison.improvement?.toFixed(1) || '96.1'}%
                       </td>
                     </tr>
                     <tr>
                       <td>Predictions Made</td>
                       <td>{comparison.baseline?.totalReviews || 0}</td>
-                      <td className="ml-value">{comparison.ml?.totalReviews || 0}</td>
+                      <td className={styles.mlValue}>{comparison.ml?.totalReviews || 0}</td>
                       <td>-</td>
                     </tr>
                     <tr>
                       <td>Features Used</td>
                       <td>3 (basic)</td>
-                      <td className="ml-value">51 (advanced)</td>
+                      <td className={styles.mlValue}>51 (advanced)</td>
                       <td>+1,600%</td>
                     </tr>
                   </tbody>
@@ -407,38 +407,38 @@ export class StatsDashboard extends Component {
               </div>
 
               {/* Charts */}
-              <div className="charts-grid">
-                <div className="chart-container">
+              <div className={styles.chartsGrid}>
+                <div className={styles.chartContainer}>
                   <canvas ref={this.comparisonChartRef}></canvas>
                 </div>
 
-                <div className="chart-container">
+                <div className={styles.chartContainer}>
                   <canvas ref={this.retentionChartRef}></canvas>
                 </div>
 
-                <div className="chart-container wide">
+                <div className={`${styles.chartContainer} ${styles.wide}`}>
                   <canvas ref={this.intervalChartRef}></canvas>
                 </div>
               </div>
 
               {/* Card Status Overview */}
-              <div className="card-status-container">
+              <div className={styles.cardStatusContainer}>
                 <h2>Card Status Overview</h2>
-                <div className="cards-list">
+                <div className={styles.cardsList}>
                   {progress.cards && progress.cards.slice(0, 10).map((card, index) => (
-                    <div key={index} className="card-item">
-                      <div className="card-question">{card.question || `Card ${index + 1}`}</div>
-                      <div className="card-stats">
-                        <span className="card-stat">
+                    <div key={index} className={styles.cardItem}>
+                      <div className={styles.cardQuestion}>{card.question || `Card ${index + 1}`}</div>
+                      <div className={styles.cardStats}>
+                        <span className={styles.cardStat}>
                           <label>Reviews:</label> {card.totalReviews || 0}
                         </span>
-                        <span className="card-stat">
+                        <span className={styles.cardStat}>
                           <label>Success:</label> {((card.successRate || 0) * 100).toFixed(0)}%
                         </span>
-                        <span className="card-stat">
+                        <span className={styles.cardStat}>
                           <label>Interval:</label> {card.memoryStrength || 1} days
                         </span>
-                        <span className="card-stat">
+                        <span className={styles.cardStat}>
                           <label>Next:</label> {card.nextReview ? new Date(card.nextReview).toLocaleDateString() : 'N/A'}
                         </span>
                       </div>

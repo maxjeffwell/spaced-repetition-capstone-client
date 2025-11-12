@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import mlService from '../services/ml-service';
 import MLStatus from './ml-status';
-import './ml-demo.css';
+import styles from './ml-demo.module.css';
 
 /**
  * ML Demo Component
@@ -151,9 +151,9 @@ export default class MLDemo extends Component {
 
     if (error) {
       return (
-        <div className="ml-demo">
+        <div className={styles.mlDemo}>
           <h2>❌ ML Service Error</h2>
-          <div className="error-message">{error}</div>
+          <div className={styles.errorMessage}>{error}</div>
           <p>The ML model could not be loaded. Using baseline algorithm only.</p>
         </div>
       );
@@ -161,44 +161,44 @@ export default class MLDemo extends Component {
 
     if (isLoading) {
       return (
-        <div className="ml-demo">
+        <div className={styles.mlDemo}>
           <h2>Loading ML Service...</h2>
-          <div className="loading-spinner">⏳</div>
+          <div className={styles.loadingSpinner}>⏳</div>
         </div>
       );
     }
 
     return (
-      <div className="ml-demo">
+      <div className={styles.mlDemo}>
         <h2>🤖 ML-Enhanced Predictions</h2>
 
         <MLStatus mlInfo={mlInfo} />
 
-        <div className="test-results">
+        <div className={styles.testResults}>
           <h3>Test Predictions</h3>
 
           {testResults.map((result, idx) => (
-            <div key={idx} className="test-result">
-              <div className="test-result-header">
+            <div key={idx} className={styles.testResult}>
+              <div className={styles.testResultHeader}>
                 <strong>{result.name}</strong>
-                <span className="prediction-value">{result.prediction} days</span>
+                <span className={styles.predictionValue}>{result.prediction} days</span>
               </div>
 
-              <div className="test-result-details">
-                <div className="feature-grid">
-                  <div className="feature">
+              <div className={styles.testResultDetails}>
+                <div className={styles.featureGrid}>
+                  <div className={styles.feature}>
                     <label>Success Rate:</label>
                     <value>{(result.features.successRate * 100).toFixed(0)}%</value>
                   </div>
-                  <div className="feature">
+                  <div className={styles.feature}>
                     <label>Reviews:</label>
                     <value>{result.features.totalReviews}</value>
                   </div>
-                  <div className="feature">
+                  <div className={styles.feature}>
                     <label>Streak:</label>
                     <value>{result.features.consecutiveCorrect}</value>
                   </div>
-                  <div className="feature">
+                  <div className={styles.feature}>
                     <label>Prediction Time:</label>
                     <value>{result.predictionTime.toFixed(2)}ms</value>
                   </div>
@@ -208,23 +208,23 @@ export default class MLDemo extends Component {
           ))}
         </div>
 
-        <div className="backend-info">
+        <div className={styles.backendInfo}>
           <h3>Backend Capabilities</h3>
-          <div className="backend-grid">
+          <div className={styles.backendGrid}>
             {Object.entries(mlInfo.backendInfo?.available || {}).map(([key, info]) => (
               <div
                 key={key}
-                className={`backend-card ${info.supported ? 'supported' : 'unsupported'}`}
+                className={`${styles.backendCard} ${info.supported ? styles.supported : styles.unsupported}`}
               >
-                <div className="backend-name">{info.name}</div>
-                <div className="backend-speedup">{info.speedup}</div>
-                <div className="backend-desc">{info.description}</div>
+                <div className={styles.backendName}>{info.name}</div>
+                <div className={styles.backendSpeedup}>{info.speedup}</div>
+                <div className={styles.backendDesc}>{info.description}</div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="memory-usage">
+        <div className={styles.memoryUsage}>
           <h4>GPU Memory Usage</h4>
           <pre>{JSON.stringify(mlInfo.metrics?.memoryUsage, null, 2)}</pre>
         </div>

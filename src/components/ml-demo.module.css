@@ -1,4 +1,4 @@
-.ml-demo {
+.mlDemo {
   max-width: 1200px;
   margin: 0 auto;
   padding: 24px;
@@ -8,32 +8,32 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.ml-demo h2 {
+.mlDemo h2 {
   color: #00ff41;
   text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
   margin-bottom: 24px;
   font-size: 32px;
 }
 
-.ml-demo h3 {
+.mlDemo h3 {
   color: #00ff41;
   font-size: 20px;
   margin: 24px 0 16px;
 }
 
-.ml-demo h4 {
+.mlDemo h4 {
   color: #aaa;
   font-size: 16px;
   margin: 16px 0 8px;
 }
 
-.loading-spinner {
+.loadingSpinner {
   text-align: center;
   font-size: 48px;
   margin: 48px 0;
 }
 
-.error-message {
+.errorMessage {
   background: rgba(255, 0, 0, 0.1);
   border: 2px solid #ff0000;
   border-radius: 8px;
@@ -42,11 +42,11 @@
   color: #ff6666;
 }
 
-.test-results {
+.testResults {
   margin: 24px 0;
 }
 
-.test-result {
+.testResult {
   background: linear-gradient(135deg, #1e1e3f 0%, #2a2a4a 100%);
   border: 1px solid rgba(0, 255, 65, 0.2);
   border-radius: 8px;
@@ -55,12 +55,12 @@
   transition: all 0.3s ease;
 }
 
-.test-result:hover {
+.testResult:hover {
   border-color: rgba(0, 255, 65, 0.5);
   transform: translateX(4px);
 }
 
-.test-result-header {
+.testResultHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -69,19 +69,22 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.test-result-header strong {
+.testResultHeader strong {
   color: #fff;
   font-size: 16px;
 }
 
-.prediction-value {
+.predictionValue {
   font-size: 24px;
   font-weight: bold;
   color: #00ff41;
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
 }
 
-.feature-grid {
+.testResultDetails {
+}
+
+.featureGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
@@ -109,18 +112,18 @@
   font-weight: 600;
 }
 
-.backend-info {
+.backendInfo {
   margin: 32px 0;
 }
 
-.backend-grid {
+.backendGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin: 16px 0;
 }
 
-.backend-card {
+.backendCard {
   background: linear-gradient(135deg, #2a2a4a 0%, #1e1e3f 100%);
   border: 2px solid #444;
   border-radius: 8px;
@@ -129,43 +132,43 @@
   transition: all 0.3s ease;
 }
 
-.backend-card.supported {
+.backendCard.supported {
   border-color: #00ff41;
   box-shadow: 0 4px 12px rgba(0, 255, 65, 0.2);
 }
 
-.backend-card.unsupported {
+.backendCard.unsupported {
   opacity: 0.5;
 }
 
-.backend-name {
+.backendName {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
   margin-bottom: 8px;
 }
 
-.backend-card.supported .backend-name {
+.backendCard.supported .backendName {
   color: #00ff41;
 }
 
-.backend-speedup {
+.backendSpeedup {
   font-size: 24px;
   font-weight: bold;
   color: #00ff41;
   margin: 12px 0;
 }
 
-.backend-card.unsupported .backend-speedup {
+.backendCard.unsupported .backendSpeedup {
   color: #666;
 }
 
-.backend-desc {
+.backendDesc {
   font-size: 12px;
   color: #aaa;
 }
 
-.memory-usage {
+.memoryUsage {
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 255, 65, 0.2);
   border-radius: 8px;
@@ -173,7 +176,7 @@
   margin: 24px 0;
 }
 
-.memory-usage pre {
+.memoryUsage pre {
   background: #000;
   padding: 12px;
   border-radius: 4px;
@@ -185,11 +188,11 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .feature-grid {
+  .featureGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .backend-grid {
+  .backendGrid {
     grid-template-columns: 1fr;
   }
 }
