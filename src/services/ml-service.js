@@ -202,7 +202,7 @@ class MLService {
       const hasExperience = questionFeatures.totalReviews > 5;
       const isPerformingWell = questionFeatures.successRate > 0.6;
 
-      if (rawPrediction < 2 && hasExperience && isPerformingWell) {
+      if (rawPrediction < 1.5 && hasExperience && isPerformingWell) {
         console.warn('⚠️ ML model predicting unreasonably low interval. Model may need retraining.');
         console.warn('   Letting server use baseline algorithm instead.');
         return null; // Signal to use server-side baseline
