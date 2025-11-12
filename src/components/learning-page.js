@@ -14,6 +14,8 @@ export class LearningPage extends Component {
       // Question state
       question: null,
       questionId: null,
+      questionFeatures: null,
+      reviewHistory: null,
       answer: '',
       isSubmitting: false,
 
@@ -94,6 +96,8 @@ export class LearningPage extends Component {
       this.setState({
         question: data.question,
         questionId: data.questionId,
+        questionFeatures: data.questionFeatures,
+        reviewHistory: data.reviewHistory,
         stats: data.stats,
         questionStartTime: Date.now(),
         answer: '',
@@ -127,9 +131,31 @@ export class LearningPage extends Component {
     const responseTime = Date.now() - this.state.questionStartTime;
 
     try {
+      // Calculate predicted interval client-side using WebGPU
+      let predictedInterval = null;
+      let predictionTime = null;
+
+      if (this.state.mlInfo.isLoaded && this.state.questionFeatures) {
+        try {
+          console.log('🚀 Making client-side WebGPU prediction...');
+          const prediction = await mlService.predict(
+            this.state.questionFeatures,
+            this.state.reviewHistory
+          );
+          predictedInterval = prediction.interval;
+          predictionTime = prediction.predictionTime;
+          console.log(`✓ Predicted interval: ${predictedInterval} days (${predictionTime.toFixed(2)}ms)`);
+        } catch (mlError) {
+          console.error('Client-side prediction failed, server will use fallback:', mlError);
+        }
+      }
+
+      // Submit answer with predicted interval
       const result = await apiService.submitAnswer(
         this.state.answer,
-        responseTime
+        responseTime,
+        predictedInterval,
+        predictionTime
       );
 
       this.setState({

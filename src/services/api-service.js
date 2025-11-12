@@ -69,10 +69,15 @@ class APIService {
     return this.request('/questions/next');
   }
 
-  async submitAnswer(answer, responseTime) {
+  async submitAnswer(answer, responseTime, predictedInterval = null, predictionTime = null) {
     return this.request('/questions/answer', {
       method: 'POST',
-      body: JSON.stringify({ answer, responseTime })
+      body: JSON.stringify({
+        answer,
+        responseTime,
+        predictedInterval,
+        predictionTime
+      })
     });
   }
 
