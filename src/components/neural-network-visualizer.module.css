@@ -1,8 +1,17 @@
 .container {
     margin-top: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.container svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
 .link {
@@ -13,4 +22,26 @@
 .nodeLabel {
     font-size: 10px;
     font-family: sans-serif;
+    fill: #aaa;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .container {
+        padding: 12px;
+    }
+
+    .nodeLabel {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 8px;
+    }
+
+    .nodeLabel {
+        font-size: 6px;
+    }
 }
