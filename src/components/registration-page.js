@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link, Navigate} from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import RegistrationForm from './registration-form';
 import styles from './landing-page.module.css';
 
@@ -8,10 +8,40 @@ export function RegistrationPage(props) {
     if (props.loggedIn) {
         return <Navigate to="/learn" replace />;
     }
+
     return (
-        <div className={styles.home}>
-            <RegistrationForm />
-            <Link to="/">Login</Link>
+        <div className={styles.landingPage}>
+            <div className={styles.landingContainer}>
+                <div className={styles.landingHeader}>
+                    <h1>🧠 Neural-Enhanced Learning</h1>
+                    <p className={styles.landingSubtitle}>
+                        Master Spanish vocabulary with AI-powered spaced repetition
+                    </p>
+                </div>
+
+                <div className={styles.loginSection}>
+                    <h2>Create Account</h2>
+                    <RegistrationForm />
+                </div>
+
+                <div className={styles.featuresSection}>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>🚀</span>
+                        <h3>WebGPU Acceleration</h3>
+                        <p>Lightning-fast ML predictions powered by your GPU</p>
+                    </div>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>🎯</span>
+                        <h3>Adaptive Learning</h3>
+                        <p>AI predicts optimal review intervals for maximum retention</p>
+                    </div>
+                    <div className={styles.feature}>
+                        <span className={styles.featureIcon}>📊</span>
+                        <h3>Real-time Analytics</h3>
+                        <p>Track your progress with detailed performance metrics</p>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
