@@ -313,6 +313,13 @@
   }
 }
 
+@media (max-width: 500px) {
+  /* Hide charts on very small screens for better mobile experience */
+  .chartsGrid {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   .statsContainer h1 {
     font-size: 28px;
