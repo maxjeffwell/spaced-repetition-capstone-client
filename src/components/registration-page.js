@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Navigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import RegistrationForm from './registration-form';
 import styles from './landing-page.module.css';
 
@@ -50,6 +50,11 @@ export function RegistrationPage(props) {
                         <h3>Real-time Analytics</h3>
                         <p>Track your progress with detailed performance metrics</p>
                     </div>
+                </div>
+
+                <div className={styles.registerSection}>
+                    <p>Already have an account?</p>
+                    <Link to="/" className={styles.registerLink}>Log In</Link>
                 </div>
             </div>
         </div>

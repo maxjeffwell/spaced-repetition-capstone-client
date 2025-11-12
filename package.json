@@ -7,6 +7,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "@tensorflow/tfjs-backend-webgpu": "^4.22.0",
     "chart.js": "^4.5.1",
+    "d3": "^7.9.0",
     "jwt-decode": "^2.2.0",
     "lodash-es": "^4.17.21",
     "react": "^18.3.1",
@@ -19,7 +20,6 @@
     "redux-form": "^8.3.10",
     "redux-thunk": "^2.3.0"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
