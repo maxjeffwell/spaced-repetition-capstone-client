@@ -9,9 +9,6 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /app
 
-# Upgrade npm to latest version to match local development
-RUN npm install -g npm@11.6.2
-
 # Build arguments for React environment variables
 ARG REACT_APP_API_BASE_URL
 ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
@@ -23,8 +20,9 @@ ENV DISABLE_ESLINT_PLUGIN=true
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies (now using npm ci with matching version)
-RUN npm ci
+# Install dependencies with npm install (more forgiving than npm ci)
+# Note: Using npm install instead of npm ci to avoid version mismatch issues
+RUN npm install --legacy-peer-deps
 
 # Copy application code
 COPY . .
