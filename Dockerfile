@@ -21,7 +21,7 @@ ENV DISABLE_ESLINT_PLUGIN=true
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy application code
 COPY . .
