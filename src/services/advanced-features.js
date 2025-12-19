@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Advanced Feature Engineering for Spaced Repetition ML Model
  *
