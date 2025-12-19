@@ -8,7 +8,6 @@
  */
 
 import * as tf from '@tensorflow/tfjs';
-import '@tensorflow/tfjs-backend-webgpu';
 import { createAdvancedFeatureVector, getFeatureArray } from './advanced-features.js';
 
 class MLService {
@@ -30,6 +29,14 @@ class MLService {
    */
   async initializeBackend() {
     console.log('🚀 Initializing TensorFlow.js backend...');
+
+    // Dynamically import WebGPU backend
+    try {
+      await import('@tensorflow/tfjs-backend-webgpu');
+      console.log('   WebGPU backend loaded');
+    } catch (error) {
+      console.log('   WebGPU backend not available, using fallback');
+    }
 
     const backends = ['webgpu', 'webgl', 'wasm', 'cpu'];
     let selectedBackend = null;
