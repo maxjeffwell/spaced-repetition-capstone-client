@@ -9,23 +9,24 @@ FROM node:18-alpine AS build
 # Set working directory
 WORKDIR /app
 
-# Build arguments for React environment variables
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies (BuildKit cache speeds up repeated builds)
+# Note: Using npm install instead of npm ci to avoid version mismatch issues
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
+
+# Copy application code
+COPY . .
+
+# Build arguments for React environment variables (after npm install for better caching)
 ARG REACT_APP_API_BASE_URL
 ENV REACT_APP_API_BASE_URL=$REACT_APP_API_BASE_URL
 
 # Disable CI mode to prevent build failures on warnings
 ENV CI=false
 ENV DISABLE_ESLINT_PLUGIN=true
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies with npm install (more forgiving than npm ci)
-# Note: Using npm install instead of npm ci to avoid version mismatch issues
-RUN npm install --legacy-peer-deps
-
-# Copy application code
-COPY . .
 
 # Build the application
 RUN npm run build
@@ -74,8 +75,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies (BuildKit cache speeds up repeated builds)
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --legacy-peer-deps
 
 # Copy application code
 COPY . .
