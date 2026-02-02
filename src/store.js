@@ -1,10 +1,9 @@
 import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
-import {loadAuthToken} from './local-storage';
 import authReducer from './reducers/auth';
 import protectedDataReducer from './reducers/protected-data';
 import answerSubmitReducer from './reducers/answer-submit';
 import scoreReducer from './reducers/score';
-import {setAuthToken, refreshAuthToken} from './actions/auth';
+import {fetchCurrentUser} from './actions/auth';
 import thunk from "redux-thunk";
 
 // Use Redux DevTools in development, regular compose in production
@@ -22,13 +21,8 @@ const store = createStore(
     composeEnhancers(applyMiddleware(thunk))
 );
 
-// Hydrate the authToken from localStorage if it exist
-const authToken = loadAuthToken();
-if (authToken) {
-    console.log('there is an auth token');
-    const token = authToken;
-    store.dispatch(setAuthToken(token));
-    store.dispatch(refreshAuthToken());
-}
+// Check for existing session via httpOnly cookie
+// The server will validate the cookie and return user info if authenticated
+store.dispatch(fetchCurrentUser());
 
 export default store;

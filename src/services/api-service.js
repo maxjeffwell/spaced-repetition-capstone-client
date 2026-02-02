@@ -1,7 +1,7 @@
 /**
  * API Service for Spaced Repetition Backend
  *
- * Handles all API calls to the Node.js backend
+ * Handles all API calls to the Node.js backend using httpOnly cookie authentication
  */
 
 import { API_BASE_URL } from '../config';
@@ -12,46 +12,62 @@ class APIService {
   }
 
   /**
-   * Make authenticated API request
+   * Make authenticated API request using httpOnly cookies
    */
   async request(endpoint, options = {}) {
-    const authToken = localStorage.getItem('authToken');
-
     const headers = {
       'Content-Type': 'application/json',
       ...options.headers
     };
 
-    if (authToken) {
-      headers['Authorization'] = `Bearer ${authToken}`;
-    }
-
     const response = await fetch(`${this.baseURL}${endpoint}`, {
       ...options,
-      headers
+      headers,
+      credentials: 'include' // Include httpOnly cookies
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'API request failed');
+      // Handle token expiration - try refresh
+      if (response.status === 401) {
+        const data = await response.json();
+        if (data.code === 'TOKEN_EXPIRED') {
+          // Try to refresh the token
+          const refreshResponse = await fetch(`${this.baseURL}/auth/refresh`, {
+            method: 'POST',
+            credentials: 'include'
+          });
+
+          if (refreshResponse.ok) {
+            // Retry original request
+            const retryResponse = await fetch(`${this.baseURL}${endpoint}`, {
+              ...options,
+              headers,
+              credentials: 'include'
+            });
+
+            if (retryResponse.ok) {
+              return retryResponse.json();
+            }
+          }
+        }
+      }
+
+      const error = await response.json().catch(() => ({ message: 'API request failed' }));
+      throw new Error(error.message || error.error || 'API request failed');
     }
 
     return response.json();
   }
 
   /**
-   * Authentication
+   * Authentication - now handled via httpOnly cookies
    */
   async login(username, password) {
     const data = await this.request('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password })
     });
-
-    if (data.authToken) {
-      localStorage.setItem('authToken', data.authToken);
-    }
-
+    // Server sets httpOnly cookies, returns user info
     return data;
   }
 
@@ -60,6 +76,16 @@ class APIService {
       method: 'POST',
       body: JSON.stringify(userData)
     });
+  }
+
+  async logout() {
+    return this.request('/auth/logout', {
+      method: 'POST'
+    });
+  }
+
+  async getCurrentUser() {
+    return this.request('/auth/me');
   }
 
   /**
