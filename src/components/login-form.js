@@ -1,56 +1,67 @@
 import React from 'react';
-import {Field, reduxForm, focus} from 'redux-form';
-import Input from './input';
-import {login} from '../actions/auth';
-import {required, nonEmpty} from '../validators';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { login } from '../actions/auth';
 import styles from './landing-page.module.css';
 
-export class LoginForm extends React.Component {
-    onSubmit(values) {
-        return this.props.dispatch(login(values.username, values.password));
-    }
+export default function LoginForm() {
+    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        setFocus,
+        setError
+    } = useForm();
 
-    render() {
-        let error;
-        if (this.props.error) {
-            error = (
-                <div className={styles.formError} aria-live="polite">
-                    {this.props.error}
-                </div>
-            );
+    const onSubmit = async (values) => {
+        try {
+            await dispatch(login(values.username, values.password));
+        } catch (err) {
+            setError('root', { message: err.message || 'Login failed' });
+            setFocus('username');
         }
-        return (
-            <form
-                className={styles.loginForm}
-                onSubmit={this.props.handleSubmit(values =>
-                    this.onSubmit(values)
-                )}>
-                {error}
-                <label htmlFor="username">Username</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="username"
-                    id="username"
-                    validate={[required, nonEmpty]}
-                />
-                <label htmlFor="password">Password</label>
-                <Field
-                    component={Input}
-                    type="password"
-                    name="password"
-                    id="password"
-                    validate={[required, nonEmpty]}
-                />
-                <button disabled={this.props.pristine || this.props.submitting}>
-                    Log in
-                </button>
-            </form>
-        );
-    }
-}
+    };
 
-export default reduxForm({
-    form: 'login',
-    onSubmitFail: (errors, dispatch) => dispatch(focus('login', 'username'))
-})(LoginForm);
+    return (
+        <form
+            className={styles.loginForm}
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            {errors.root && (
+                <div className={styles.formError} aria-live="polite">
+                    {errors.root.message}
+                </div>
+            )}
+            <label htmlFor="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                {...register('username', {
+                    required: 'Required',
+                    validate: value => value.trim() !== '' || 'Cannot be empty'
+                })}
+            />
+            {errors.username && (
+                <div className="form-error">{errors.username.message}</div>
+            )}
+
+            <label htmlFor="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                {...register('password', {
+                    required: 'Required',
+                    validate: value => value.trim() !== '' || 'Cannot be empty'
+                })}
+            />
+            {errors.password && (
+                <div className="form-error">{errors.password.message}</div>
+            )}
+
+            <button type="submit" disabled={isSubmitting}>
+                Log in
+            </button>
+        </form>
+    );
+}

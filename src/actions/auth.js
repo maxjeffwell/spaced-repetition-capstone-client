@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode';
-import {SubmissionError} from 'redux-form';
 
 import {API_BASE_URL} from '../config';
 import {normalizeResponseErrors} from './utils';
@@ -72,13 +71,7 @@ export const login = (username, password) => dispatch => {
                         ? 'Incorrect username or password'
                         : 'Unable to login, please try again';
                 dispatch(authError(err));
-                // Could not authenticate, so return a SubmissionError for Redux
-                // Form
-                return Promise.reject(
-                    new SubmissionError({
-                        _error: message
-                    })
-                );
+                return Promise.reject(new Error(message));
             })
     );
 };

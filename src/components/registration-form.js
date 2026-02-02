@@ -1,67 +1,119 @@
 import React from 'react';
-import {Field, reduxForm, focus} from 'redux-form';
-import {registerUser} from '../actions/users';
-import {login} from '../actions/auth';
-import Input from './input';
-import {required, nonEmpty, matches, length, isTrimmed} from '../validators';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../actions/users';
+import { login } from '../actions/auth';
 import styles from './landing-page.module.css';
 
-const passwordLength = length({min: 10, max: 72});
-const matchesPassword = matches('password');
+export default function RegistrationForm() {
+    const dispatch = useDispatch();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors, isSubmitting },
+        setFocus,
+        setError
+    } = useForm();
 
-export class RegistrationForm extends React.Component {
-    onSubmit(values) {
-        const {username, password, firstName, lastName} = values;
-        const user = {username, password, firstName, lastName};
-        return this.props
-            .dispatch(registerUser(user))
-            .then(() => this.props.dispatch(login(username, password)));
-    }
+    const password = watch('password');
 
-    render() {
-        return (
-            <form
-                className={styles.loginForm}
-                onSubmit={this.props.handleSubmit(values =>
-                    this.onSubmit(values)
-                )}>
-                <label htmlFor="firstName">First name</label>
-                <Field component={Input} type="text" name="firstName" />
-                <label htmlFor="lastName">Last name</label>
-                <Field component={Input} type="text" name="lastName" />
-                <label htmlFor="username">Username</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="username"
-                    validate={[required, nonEmpty, isTrimmed]}
-                />
-                <label htmlFor="password">Password</label>
-                <Field
-                    component={Input}
-                    type="password"
-                    name="password"
-                    validate={[required, passwordLength, isTrimmed]}
-                />
-                <label htmlFor="passwordConfirm">Confirm password</label>
-                <Field
-                    component={Input}
-                    type="password"
-                    name="passwordConfirm"
-                    validate={[required, nonEmpty, matchesPassword]}
-                />
-                <button
-                    type="submit"
-                    disabled={this.props.pristine || this.props.submitting}>
-                    Register
-                </button>
-            </form>
-        );
-    }
+    const onSubmit = async (values) => {
+        const { username, password, firstName, lastName } = values;
+        const user = { username, password, firstName, lastName };
+
+        try {
+            await dispatch(registerUser(user));
+            await dispatch(login(username, password));
+        } catch (err) {
+            setError('root', { message: err.message || 'Registration failed' });
+            setFocus('firstName');
+        }
+    };
+
+    return (
+        <form
+            className={styles.loginForm}
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            {errors.root && (
+                <div className={styles.formError} aria-live="polite">
+                    {errors.root.message}
+                </div>
+            )}
+
+            <label htmlFor="firstName">First name</label>
+            <input
+                type="text"
+                id="firstName"
+                {...register('firstName')}
+            />
+            {errors.firstName && (
+                <div className="form-error">{errors.firstName.message}</div>
+            )}
+
+            <label htmlFor="lastName">Last name</label>
+            <input
+                type="text"
+                id="lastName"
+                {...register('lastName')}
+            />
+            {errors.lastName && (
+                <div className="form-error">{errors.lastName.message}</div>
+            )}
+
+            <label htmlFor="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                {...register('username', {
+                    required: 'Required',
+                    validate: {
+                        nonEmpty: value => value.trim() !== '' || 'Cannot be empty',
+                        isTrimmed: value => value.trim() === value || 'Cannot start or end with whitespace'
+                    }
+                })}
+            />
+            {errors.username && (
+                <div className="form-error">{errors.username.message}</div>
+            )}
+
+            <label htmlFor="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                {...register('password', {
+                    required: 'Required',
+                    minLength: { value: 10, message: 'Must be at least 10 characters long' },
+                    maxLength: { value: 72, message: 'Must be at most 72 characters long' },
+                    validate: {
+                        isTrimmed: value => value.trim() === value || 'Cannot start or end with whitespace'
+                    }
+                })}
+            />
+            {errors.password && (
+                <div className="form-error">{errors.password.message}</div>
+            )}
+
+            <label htmlFor="passwordConfirm">Confirm password</label>
+            <input
+                type="password"
+                id="passwordConfirm"
+                {...register('passwordConfirm', {
+                    required: 'Required',
+                    validate: {
+                        nonEmpty: value => value.trim() !== '' || 'Cannot be empty',
+                        matchesPassword: value => value.trim() === password?.trim() || 'Does not match'
+                    }
+                })}
+            />
+            {errors.passwordConfirm && (
+                <div className="form-error">{errors.passwordConfirm.message}</div>
+            )}
+
+            <button type="submit" disabled={isSubmitting}>
+                Register
+            </button>
+        </form>
+    );
 }
-
-export default reduxForm({
-    form: 'registration',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('registration', Object.keys(errors)[0]))
-})(RegistrationForm);
