@@ -86,7 +86,10 @@ class MLService {
   /**
    * Load the trained model
    */
-  async loadModel(modelPath = '/models/model.json') {
+  // v2 (2026-10-06): 24 growth-encoding features incl. the graded outcome. Served
+  // from its own directory so caches (Cloudflare, browsers) never hand a v1
+  // bundle v2 files or vice versa.
+  async loadModel(modelDir = '/models/v2') {
     const startTime = performance.now();
 
     try {
@@ -98,17 +101,23 @@ class MLService {
       // Load model using TensorFlow.js built-in loader
       // Add cache-busting parameter to force fresh fetch
       const cacheBuster = `?v=${Date.now()}`;
+      const modelPath = `${modelDir}/model.json`;
       const modelUrlWithCache = modelPath + cacheBuster;
       console.log(`\n📥 Loading model from ${modelPath}...`);
       this.model = await tf.loadLayersModel(modelUrlWithCache);
 
       // Load normalization stats (with cache busting)
-      const statsResponse = await fetch(`/models/normalization-stats.json${cacheBuster}`);
+      const statsResponse = await fetch(`${modelDir}/normalization-stats.json${cacheBuster}`);
       this.normalizationStats = await statsResponse.json();
 
       // Load metadata (with cache busting)
-      const metadataResponse = await fetch(`/models/metadata.json${cacheBuster}`);
+      const metadataResponse = await fetch(`${modelDir}/metadata.json${cacheBuster}`);
       const metadata = await metadataResponse.json();
+
+      const expected = this.model.inputs[0].shape[1];
+      if (this.normalizationStats.mean.length !== expected) {
+        throw new Error(`Normalization stats (${this.normalizationStats.mean.length}) do not match model input (${expected})`);
+      }
 
       const loadTime = performance.now() - startTime;
       this.performanceMetrics.loadTime = loadTime;
@@ -160,9 +169,31 @@ class MLService {
   }
 
   /**
-   * Predict optimal interval for a question
+   * Predict the next interval for BOTH possible outcomes of the answer the user
+   * is about to submit. The browser does not know whether the answer is right
+   * (the server grades it), so it sends { ifCorrect, ifIncorrect } and the
+   * server applies the branch matching the graded answer.
    */
-  async predict(questionFeatures, reviewHistory = null) {
+  async predictBothOutcomes(questionFeatures, reviewHistory = null) {
+    const startTime = performance.now();
+    const correct = await this.predict(questionFeatures, reviewHistory, true);
+    const incorrect = await this.predict(questionFeatures, reviewHistory, false);
+    if (!correct || !incorrect) return null;
+    return {
+      ifCorrect: correct.interval,
+      ifIncorrect: incorrect.interval,
+      predictionTime: performance.now() - startTime,
+      backend: this.backend,
+      normalizedFeatures: correct.normalizedFeatures,
+      advancedFeatures: correct.advancedFeatures
+    };
+  }
+
+  /**
+   * Predict optimal interval for a question, given the outcome of the current
+   * answer (recalled = true/false). Defaults to the "recalled" branch.
+   */
+  async predict(questionFeatures, reviewHistory = null, recalled = true) {
     if (!this.isLoaded || !this.model) {
       throw new Error('Model not loaded. Call loadModel() first.');
     }
@@ -170,19 +201,19 @@ class MLService {
     const startTime = performance.now();
 
     try {
-      // Create base features object
+      // Create base features object (v2: card state + graded outcome; no elapsed-time inputs)
       const baseFeatures = {
         memoryStrength: questionFeatures.memoryStrength || 1,
         difficultyRating: questionFeatures.difficultyRating || 0.5,
-        timeSinceLastReview: questionFeatures.timeSinceLastReview || 0,
         successRate: questionFeatures.successRate || 0,
         averageResponseTime: questionFeatures.averageResponseTime || 0,
         totalReviews: questionFeatures.totalReviews || 0,
         consecutiveCorrect: questionFeatures.consecutiveCorrect || 0,
-        timeOfDay: questionFeatures.timeOfDay || (new Date().getHours() / 24)
+        timeOfDay: questionFeatures.timeOfDay || (new Date().getHours() / 24),
+        recalled: recalled ? 1 : 0
       };
 
-      // Generate advanced features (51 dimensions)
+      // Generate the v2 feature vector (24 dimensions)
       const advancedFeatures = createAdvancedFeatureVector(baseFeatures, reviewHistory);
       const featureVector = getFeatureArray(advancedFeatures);
 
@@ -204,20 +235,14 @@ class MLService {
         totalReviews: questionFeatures.totalReviews
       });
 
-      // Sanity check: If model predicts unreasonably low interval for well-performing cards,
-      // it indicates model issues. Return null so server can use baseline algorithm.
-      // Note: Temporarily disabled as model is trained on short-interval data
-      // Will re-enable once we have more long-interval training data
-      const hasExperience = questionFeatures.totalReviews > 10;
-      const isPerformingWell = questionFeatures.successRate > 0.8;
-
-      if (rawPrediction < 0.5 && hasExperience && isPerformingWell) {
-        console.warn('⚠️ ML model predicting unreasonably low interval. Model may need retraining.');
-        console.warn('   Letting server use baseline algorithm instead.');
-        return null; // Signal to use server-side baseline
+      // Sanity check: a non-finite output means the model/stats are broken; let the
+      // server predict instead (it runs the same v2 model on OVMS).
+      if (!Number.isFinite(rawPrediction)) {
+        console.warn('⚠️ ML model returned a non-finite value; letting the server predict instead.');
+        return null;
       }
 
-      const interval = Math.max(1, Math.round(rawPrediction));
+      const interval = Math.max(1, Math.min(365, Math.round(rawPrediction)));
 
       // Cleanup tensors
       inputTensor.dispose();

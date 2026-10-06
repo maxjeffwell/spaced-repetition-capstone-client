@@ -403,7 +403,7 @@ export class StatsDashboard extends Component {
                     <tr>
                       <td>Features Used</td>
                       <td>3 (basic)</td>
-                      <td className={styles.mlValue}>51 (advanced)</td>
+                      <td className={styles.mlValue}>24 (v2, outcome-aware)</td>
                       <td>+1,600%</td>
                     </tr>
                   </tbody>

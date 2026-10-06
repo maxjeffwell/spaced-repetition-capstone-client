@@ -131,36 +131,36 @@ export class LearningPage extends Component {
     const responseTime = Date.now() - this.state.questionStartTime;
 
     try {
-      // Calculate predicted interval client-side using WebGPU
-      let predictedInterval = null;
+      // Predict client-side (WebGPU) for BOTH outcomes: the server grades the
+      // answer and applies the branch that matches (v2 model, 2026-10-06).
+      let predictedIntervals = null;
       let predictionTime = null;
 
       if (this.state.mlInfo.isLoaded && this.state.questionFeatures) {
         try {
-          console.log('🚀 Making client-side WebGPU prediction...');
-          const prediction = await mlService.predict(
+          console.log('🚀 Making client-side WebGPU prediction (both outcomes)...');
+          const prediction = await mlService.predictBothOutcomes(
             this.state.questionFeatures,
             this.state.reviewHistory
           );
 
-          // If prediction is null, model detected unreasonable prediction
           if (prediction === null) {
-            console.log('⚠️ ML model prediction skipped, server will use baseline');
+            console.log('⚠️ ML model prediction skipped, server will predict');
           } else {
-            predictedInterval = prediction.interval;
+            predictedIntervals = { ifCorrect: prediction.ifCorrect, ifIncorrect: prediction.ifIncorrect };
             predictionTime = prediction.predictionTime;
-            console.log(`✓ Predicted interval: ${predictedInterval} days (${predictionTime.toFixed(2)}ms)`);
+            console.log(`✓ Predicted interval: ${prediction.ifCorrect} days if correct, ${prediction.ifIncorrect} if not (${predictionTime.toFixed(2)}ms)`);
           }
         } catch (mlError) {
           console.error('Client-side prediction failed, server will use fallback:', mlError);
         }
       }
 
-      // Submit answer with predicted interval
+      // Submit answer with both predicted intervals
       const result = await apiService.submitAnswer(
         this.state.answer,
         responseTime,
-        predictedInterval,
+        predictedIntervals,
         predictionTime
       );
 

@@ -95,13 +95,14 @@ class APIService {
     return this.request('/questions/next');
   }
 
-  async submitAnswer(answer, responseTime, predictedInterval = null, predictionTime = null) {
+  // predictedIntervals: { ifCorrect, ifIncorrect } from the v2 browser model (or null)
+  async submitAnswer(answer, responseTime, predictedIntervals = null, predictionTime = null) {
     return this.request('/questions/answer', {
       method: 'POST',
       body: JSON.stringify({
         answer,
         responseTime,
-        predictedInterval,
+        predictedIntervals,
         predictionTime
       })
     });
