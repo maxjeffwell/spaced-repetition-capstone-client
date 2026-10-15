@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import {connect} from 'react-redux';
 import {Routes, Route} from 'react-router-dom';
 
@@ -7,8 +7,10 @@ import Dashboard from './dashboard';
 import LearningPage from './learning-page';
 import StatsDashboard from './stats-dashboard';
 import RegistrationPage from './registration-page';
-import MLDemo from './ml-demo';
 import {refreshAuthToken} from '../actions/auth';
+
+// Lazy: the WebGPU demo pulls in TensorFlow.js; keep it out of the main bundle.
+const MLDemo = lazy(() => import('./ml-demo'));
 
 export class App extends React.Component {
     componentDidUpdate(prevProps) {
@@ -48,7 +50,7 @@ export class App extends React.Component {
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/learn" element={<LearningPage />} />
                     <Route path="/stats" element={<StatsDashboard />} />
-                    <Route path="/ml-demo" element={<MLDemo />} />
+                    <Route path="/ml-demo" element={<Suspense fallback={<div>Loading ML demo…</div>}><MLDemo /></Suspense>} />
                     <Route path="/register" element={<RegistrationPage />} />
                 </Routes>
             </div>

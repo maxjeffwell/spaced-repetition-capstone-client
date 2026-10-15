@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import apiService from '../services/api-service';
-import mlService from '../services/ml-service';
-import MLStatus from './ml-status';
 import NavBar from './nav-bar';
 import styles from './learning-page.module.css';
 
@@ -35,14 +33,6 @@ export class LearningPage extends Component {
         currentStreak: 0
       },
 
-      // ML
-      mlInfo: {
-        isLoaded: false,
-        backend: null,
-        metrics: null,
-        metadata: null
-      },
-
       // State
       loading: true,
       error: null
@@ -50,32 +40,7 @@ export class LearningPage extends Component {
   }
 
   async componentDidMount() {
-    // Initialize ML service
-    this.initializeML();
-
-    // Load first question
     this.loadNextQuestion();
-  }
-
-  async initializeML() {
-    try {
-      const loadResult = await mlService.loadModel();
-
-      this.setState({
-        mlInfo: {
-          isLoaded: true,
-          backend: loadResult.backend,
-          metadata: loadResult.metadata,
-          metrics: mlService.getMetrics(),
-          backendInfo: mlService.getBackendInfo()
-        }
-      });
-
-      console.log('✓ ML service initialized:', loadResult.backend);
-    } catch (error) {
-      console.error('Failed to load ML service:', error);
-      // Continue without ML - will use baseline
-    }
   }
 
   async loadNextQuestion() {
@@ -131,50 +96,17 @@ export class LearningPage extends Component {
     const responseTime = Date.now() - this.state.questionStartTime;
 
     try {
-      // Predict client-side (WebGPU) for BOTH outcomes: the server grades the
-      // answer and applies the branch that matches (v2 model, 2026-10-06).
-      let predictedIntervals = null;
-      let predictionTime = null;
-
-      if (this.state.mlInfo.isLoaded && this.state.questionFeatures) {
-        try {
-          console.log('🚀 Making client-side WebGPU prediction (both outcomes)...');
-          const prediction = await mlService.predictBothOutcomes(
-            this.state.questionFeatures,
-            this.state.reviewHistory
-          );
-
-          if (prediction === null) {
-            console.log('⚠️ ML model prediction skipped, server will predict');
-          } else {
-            predictedIntervals = { ifCorrect: prediction.ifCorrect, ifIncorrect: prediction.ifIncorrect };
-            predictionTime = prediction.predictionTime;
-            console.log(`✓ Predicted interval: ${prediction.ifCorrect} days if correct, ${prediction.ifIncorrect} if not (${predictionTime.toFixed(2)}ms)`);
-          }
-        } catch (mlError) {
-          console.error('Client-side prediction failed, server will use fallback:', mlError);
-        }
-      }
-
-      // Submit answer with both predicted intervals
-      const result = await apiService.submitAnswer(
-        this.state.answer,
-        responseTime,
-        predictedIntervals,
-        predictionTime
-      );
+      // The server grades the answer and predicts the next interval itself
+      // (v2 model on OVMS / Intel iGPU, local tfjs fallback). The browser-side
+      // WebGPU model is now only used by the /ml-demo showcase page.
+      const result = await apiService.submitAnswer(this.state.answer, responseTime);
 
       this.setState({
         correct: result.correct,
         feedback: result.feedback,
         showFeedback: true,
         isSubmitting: false,
-        stats: result.stats,
-        // Update ML metrics
-        mlInfo: {
-          ...this.state.mlInfo,
-          metrics: mlService.getMetrics()
-        }
+        stats: result.stats
       });
 
     } catch (error) {
@@ -194,7 +126,7 @@ export class LearningPage extends Component {
       return <Navigate to="/" replace />;
     }
 
-    const { question, answer, showFeedback, feedback, correct, stats, loading, error, isSubmitting, mlInfo } = this.state;
+    const { question, answer, showFeedback, feedback, correct, stats, loading, error, isSubmitting } = this.state;
 
     return (
       <div className={styles.learningPage}>
@@ -203,9 +135,6 @@ export class LearningPage extends Component {
 
           {/* Navigation */}
           <NavBar />
-
-          {/* ML Status Banner */}
-          <MLStatus mlInfo={mlInfo} />
 
           {/* Stats Bar */}
           <div className={styles.statsBar}>
