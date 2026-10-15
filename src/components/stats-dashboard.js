@@ -9,6 +9,19 @@ import styles from './stats-dashboard.module.css';
 // Register Chart.js components
 Chart.register(...registerables);
 
+/**
+ * Percent reduction in mean absolute error, ML vs baseline, from whatever
+ * MAE fields the API provides. '-' when the server sends no MAE (the live
+ * comparison endpoint currently reports counts/retention/intervals only).
+ */
+export function maeImprovement(comparison) {
+  const baselineMAE = comparison?.baseline?.mae ?? comparison?.baselineMAE;
+  const mlMAE = comparison?.ml?.mae ?? comparison?.mlMAE;
+  if (!(baselineMAE > 0) || !Number.isFinite(mlMAE)) return '-';
+  const pct = (1 - mlMAE / baselineMAE) * 100;
+  return `${pct >= 0 ? '+' : ''}${pct.toFixed(1)}%`;
+}
+
 export class StatsDashboard extends Component {
   constructor(props) {
     super(props);
@@ -44,10 +57,13 @@ export class StatsDashboard extends Component {
     this.setState({ loading: true, error: null });
 
     try {
-      const [comparison, progress] = await Promise.all([
+      const [comparisonResponse, progress] = await Promise.all([
         apiService.getAlgorithmComparison(),
         apiService.getProgress()
       ]);
+
+      // GET /questions/stats/comparison returns { comparison, mlReadiness, currentMode }
+      const comparison = comparisonResponse?.comparison || comparisonResponse;
 
       this.setState({
         comparison,
@@ -391,7 +407,7 @@ export class StatsDashboard extends Component {
                       <td>{(comparison.baseline?.mae || comparison.baselineMAE || 0).toFixed(4)} days</td>
                       <td className={styles.mlValue}>{(comparison.ml?.mae || comparison.mlMAE || 0).toFixed(4)} days</td>
                       <td className={styles.improvementValue}>
-                        +{comparison.improvement?.toFixed(1) || '96.1'}%
+                        {maeImprovement(comparison)}
                       </td>
                     </tr>
                     <tr>
